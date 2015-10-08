@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.Common", "Common\SOLA.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{49E0425F-E76F-4014-8D72-F7890D250B5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.Models", "SOLA.Models\SOLA.Models.csproj", "{94A91B7C-9CBB-4359-976B-D3FAC3DBA0E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.Models", "Common\SOLA.Models\SOLA.Models.csproj", "{94A91B7C-9CBB-4359-976B-D3FAC3DBA0E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.Infrastructure.WebApi", "SOLA.Infrastructure.WebApi\SOLA.Infrastructure.WebApi.csproj", "{59EF3B8C-251C-4B6C-8D11-8E898A2594BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.Infrastructure.WebApi", "Infrastructure\SOLA.Infrastructure.WebApi\SOLA.Infrastructure.WebApi.csproj", "{59EF3B8C-251C-4B6C-8D11-8E898A2594BC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A72AFFAC-B414-41FC-9459-E130982EC1D8}"
 	ProjectSection(SolutionItems) = preProject

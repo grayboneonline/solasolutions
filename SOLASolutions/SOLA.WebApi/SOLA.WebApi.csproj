@@ -159,11 +159,11 @@
       <Project>{50c3c387-bb5c-4dab-a09c-a2ddaa5edb70}</Project>
       <Name>SOLA.Infrastructure.OAuth</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SOLA.Infrastructure.WebApi\SOLA.Infrastructure.WebApi.csproj">
+    <ProjectReference Include="..\Infrastructure\SOLA.Infrastructure.WebApi\SOLA.Infrastructure.WebApi.csproj">
       <Project>{59EF3B8C-251C-4B6C-8D11-8E898A2594BC}</Project>
       <Name>SOLA.Infrastructure.WebApi</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SOLA.Models\SOLA.Models.csproj">
+    <ProjectReference Include="..\Common\SOLA.Models\SOLA.Models.csproj">
       <Project>{94a91b7c-9cbb-4359-976b-d3fac3dba0e3}</Project>
       <Name>SOLA.Models</Name>
     </ProjectReference>
