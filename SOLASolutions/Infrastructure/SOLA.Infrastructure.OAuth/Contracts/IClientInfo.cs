@@ -1,9 +1,9 @@
 ﻿namespace SOLA.Infrastructure.OAuth.Contracts
 {
-    public interface IClientInfo
+    public class ClientInfo
     {
-        bool IsActive { get; set; }
-        string AllowedOrigin { get; set; }
-        int RefreshTokenLifeTime { get; set; }
+        public bool IsActive { get; set; }
+        public string AllowedOrigin { get; set; }
+        public int RefreshTokenLifeTime { get; set; }
     }
 }

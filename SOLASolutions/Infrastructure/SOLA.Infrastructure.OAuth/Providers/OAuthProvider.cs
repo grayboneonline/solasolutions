@@ -10,7 +10,7 @@ namespace SOLA.Infrastructure.OAuth.Providers
 {
     public class OAuthProvider : OAuthAuthorizationServerProvider
     {
-        public Func<string, IClientInfo> GetClientFunc { get; set; }
+        public Func<string, ClientInfo> GetClientFunc { get; set; }
 
         public Func<string, string, bool> ValidateUserNameAndPassword { get; set; }
 

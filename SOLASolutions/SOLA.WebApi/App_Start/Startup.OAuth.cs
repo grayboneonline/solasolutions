@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Autofac;
+using SOLA.Infrastructure.OAuth.Contracts;
 using SOLA.Infrastructure.OAuth.Formats;
 using SOLA.Infrastructure.OAuth.Providers;
 using Microsoft.Owin;
@@ -8,7 +12,7 @@ using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using SOLA.Common;
-using SOLA.WebApi.Models;
+using SOLA.MemoryCache;
 using SOLA.WebApi.TemporaryDatasource;
 
 namespace SOLA.WebApi
@@ -19,7 +23,8 @@ namespace SOLA.WebApi
 
 		private readonly Func<string, ClientInfo> getClientFunc = clientId =>
         {
-            var client = ApiClientDatasource.GetApiClientByClientId(clientId);
+            var cacheManager = Container.Resolve<ICacheManager>();
+            var client = cacheManager.Get<List<ApiClient>>(CacheKey.ApiClients).FirstOrDefault(x => x.ClientId == clientId);
             if (client == null)
                 return null;
 
@@ -61,7 +66,8 @@ namespace SOLA.WebApi
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            var allowClients = ApiClientDatasource.GetAllClientId();
+            var cacheManager = Container.Resolve<ICacheManager>();
+            var allowClients = cacheManager.Get<List<ApiClient>>(CacheKey.ApiClients).ConvertAll(x => x.ClientId);
 
             app.UseOAuthAuthorizationServer(
                 new OAuthAuthorizationServerOptions

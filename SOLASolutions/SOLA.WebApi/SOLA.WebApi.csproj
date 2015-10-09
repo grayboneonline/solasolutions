@@ -132,7 +132,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ClientInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="TemporaryDatasource\ApiClientDatasource.cs" />
@@ -149,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\SOLA.Common\SOLA.Common.csproj">
@@ -166,6 +166,10 @@
     <ProjectReference Include="..\Common\SOLA.Models\SOLA.Models.csproj">
       <Project>{94a91b7c-9cbb-4359-976b-d3fac3dba0e3}</Project>
       <Name>SOLA.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure\SOLA.MemoryCache\SOLA.MemoryCache.csproj">
+      <Project>{882b6ec0-0e79-466a-8460-eae34ca97e48}</Project>
+      <Name>SOLA.MemoryCache</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

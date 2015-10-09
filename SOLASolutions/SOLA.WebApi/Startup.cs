@@ -1,8 +1,8 @@
-﻿using System.Reflection;
-using Autofac;
-using Autofac.Integration.WebApi;
+﻿using Autofac;
 using Owin;
 using System.Web.Http;
+using SOLA.MemoryCache;
+using SOLA.WebApi.TemporaryDatasource;
 
 namespace SOLA.WebApi
 {
@@ -16,10 +16,20 @@ namespace SOLA.WebApi
 
             WebApiConfig.Register(HttpConfig);
             ConfigureAutofac(app);
+           
+            SetMemoryCache();
+
             ConfigureOAuth(app);
 
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(HttpConfig);
+        }
+
+        public void SetMemoryCache()
+        {
+            var cacheManager = Container.Resolve<ICacheManager>();
+
+            cacheManager.Set(CacheKey.ApiClients, ApiClientDatasource.Data);
         }
     }
 }
