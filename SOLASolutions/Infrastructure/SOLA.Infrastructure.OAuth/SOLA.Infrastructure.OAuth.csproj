@@ -64,7 +64,8 @@
     <Compile Include="Contracts\IClientInfo.cs" />
     <Compile Include="OAuthDefaults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\OAuthProvider.cs" />
+    <Compile Include="Providers\OAuthAuthenticationProvider.cs" />
+    <Compile Include="Providers\OAuthAuthorizationProvider.cs" />
     <Compile Include="Providers\RefreshTokenProvider.cs" />
   </ItemGroup>
   <ItemGroup>

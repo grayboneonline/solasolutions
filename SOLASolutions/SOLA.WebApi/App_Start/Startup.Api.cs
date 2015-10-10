@@ -1,17 +1,19 @@
 ﻿using System.Web.Http;
+using SOLA.Infrastructure.WebApi.MessageHandlers;
 
 namespace SOLA.WebApi
 {
-    public static class WebApiConfig
+    public partial class Startup
     {
-        public static void Register(HttpConfiguration config)
+        public static void ConfigureWebApi()
         {
             // Web API configuration and services
+            HttpConfig.MessageHandlers.Add(new RetrieveDataMessageHandler());
 
             // Web API routes
-            config.MapHttpAttributeRoutes();
+            HttpConfig.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
+            HttpConfig.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }

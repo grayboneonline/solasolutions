@@ -5,6 +5,7 @@ namespace SOLA.MemoryCache
 {
     public interface ICacheManager
     {
+        void Initialize();
         void Set<T>(CacheKey key, T data, bool overwrite = false);
         T Get<T>(CacheKey key);
     }
@@ -13,28 +14,28 @@ namespace SOLA.MemoryCache
     {
         private Dictionary<CacheKey, CacheObject> memoryCache;
 
-        public Dictionary<CacheKey, CacheObject> MemoryCache
+        public void Initialize()
         {
-            get { return memoryCache ?? (memoryCache = new Dictionary<CacheKey, CacheObject>()); }
+            memoryCache = new Dictionary<CacheKey, CacheObject>();
         }
 
         public void Set<T>(CacheKey key, T data, bool overwrite = false)
         {
             var cacheObj = CacheObject<T>.Create(data);
-            if (MemoryCache.ContainsKey(key))
+            if (memoryCache.ContainsKey(key))
             {
-                if (overwrite) MemoryCache[key] = cacheObj;
+                if (overwrite) memoryCache[key] = cacheObj;
                 else throw new ArgumentException(key + " already exists.");
             }
             else
-                MemoryCache.Add(key, cacheObj);
+                memoryCache.Add(key, cacheObj);
         }
 
         public T Get<T>(CacheKey key)
         {
-            if (!MemoryCache.ContainsKey(key))
+            if (!memoryCache.ContainsKey(key))
                 throw new ArgumentException(key + " is not existed.");
-            var cacheObj = MemoryCache[key] as CacheObject<T>;
+            var cacheObj = memoryCache[key] as CacheObject<T>;
             if (cacheObj == null)
                 throw new InvalidCastException("Invalid type for " + key);
 
@@ -45,6 +46,7 @@ namespace SOLA.MemoryCache
     public enum CacheKey
     {
         ApiClients = 1,
-        UserSessions = 2,
+        RefreshTokens = 2,
+        UserSessions = 3,
     }
 }

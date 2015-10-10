@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Collections.Generic;
+using Autofac;
 using Owin;
 using System.Web.Http;
 using SOLA.MemoryCache;
@@ -14,7 +15,8 @@ namespace SOLA.WebApi
         {
             HttpConfig = new HttpConfiguration();
 
-            WebApiConfig.Register(HttpConfig);
+            ConfigureMvc();
+            ConfigureWebApi();
             ConfigureAutofac(app);
            
             SetMemoryCache();
@@ -29,7 +31,9 @@ namespace SOLA.WebApi
         {
             var cacheManager = Container.Resolve<ICacheManager>();
 
-            cacheManager.Set(CacheKey.ApiClients, ApiClientDatasource.Data);
+            cacheManager.Initialize();
+            cacheManager.Set(CacheKey.ApiClients, new ApplicationClientCache(ApplicationClientDatasource.Data));
+            cacheManager.Set(CacheKey.RefreshTokens, new RefreshTokenCache());
         }
     }
 }

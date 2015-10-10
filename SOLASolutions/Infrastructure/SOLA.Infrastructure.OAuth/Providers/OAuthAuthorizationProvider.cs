@@ -8,7 +8,7 @@ using SOLA.Infrastructure.OAuth.Contracts;
 
 namespace SOLA.Infrastructure.OAuth.Providers
 {
-    public class OAuthProvider : OAuthAuthorizationServerProvider
+    public class OAuthAuthorizationProvider : OAuthAuthorizationServerProvider
     {
         public Func<string, ClientInfo> GetClientFunc { get; set; }
 
@@ -68,7 +68,8 @@ namespace SOLA.Infrastructure.OAuth.Providers
             var identity = new ClaimsIdentity(OAuthDefaults.TokenFormat);
 
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim(OAuthDefaults.HeaderKeySub, context.UserName));
+            identity.AddClaim(new Claim(OAuthDefaults.ClaimKeySub, context.UserName));
+            identity.AddClaim(new Claim(OAuthDefaults.ClaimKeySite, context.Request.Uri.Host.Split('.')[0]));
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
                 {

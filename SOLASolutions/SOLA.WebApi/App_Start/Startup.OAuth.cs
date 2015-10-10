@@ -24,7 +24,7 @@ namespace SOLA.WebApi
 		private readonly Func<string, ClientInfo> getClientFunc = clientId =>
         {
             var cacheManager = Container.Resolve<ICacheManager>();
-            var client = cacheManager.Get<List<ApiClient>>(CacheKey.ApiClients).FirstOrDefault(x => x.ClientId == clientId);
+            var client = cacheManager.Get<ApplicationClientCache>(CacheKey.ApiClients).Get(clientId);
             if (client == null)
                 return null;
 
@@ -41,9 +41,9 @@ namespace SOLA.WebApi
         private readonly Func<string, string, string, DateTime, DateTime, string, bool> addRefreshTokenFunc = 
             (token, clientId, subject, issued, expires, protectedTicket) =>
         {
-            RefreshTokenDatasource.Add(new RefreshToken
+            var cacheManager = Container.Resolve<ICacheManager>();
+            cacheManager.Get<RefreshTokenCache>(CacheKey.RefreshTokens).Add(new RefreshToken
             {
-                Id = RefreshTokenDatasource.GetNewId(),
                 ClientId = clientId,
                 Subject = subject,
                 Token = token,
@@ -51,23 +51,29 @@ namespace SOLA.WebApi
                 ExpiresUtc = expires,
                 ProtectedTicket = protectedTicket,
             });
+            
             return true;
         };
 
         private readonly Func<string, string> getRefreshTokenProtectedTicketFunc = hashedToken =>
         {
-            var token = RefreshTokenDatasource.GetByToken(hashedToken);
+            var cacheManager = Container.Resolve<ICacheManager>();
+            var token = cacheManager.Get<RefreshTokenCache>(CacheKey.RefreshTokens)[hashedToken];
             return token == null ? null : token.ProtectedTicket;
         };
 
-        private readonly Action<string> removeRefreshTokenAction = hashedToken => RefreshTokenDatasource.RemoveByToken(hashedToken);
+        private readonly Action<string> removeRefreshTokenAction = hashedToken =>
+        {
+            var cacheManager = Container.Resolve<ICacheManager>();
+            cacheManager.Get<RefreshTokenCache>(CacheKey.RefreshTokens).Remove(hashedToken);
+        };
 
         #endregion
 
         public void ConfigureOAuth(IAppBuilder app)
         {
             var cacheManager = Container.Resolve<ICacheManager>();
-            var allowClients = cacheManager.Get<List<ApiClient>>(CacheKey.ApiClients).ConvertAll(x => x.ClientId);
+            var allowClients = cacheManager.Get<ApplicationClientCache>(CacheKey.ApiClients).GetAllClientId();
 
             app.UseOAuthAuthorizationServer(
                 new OAuthAuthorizationServerOptions
@@ -77,7 +83,7 @@ namespace SOLA.WebApi
                     TokenEndpointPath = new PathString(OAuthConstants.TokenEndPoint),
                     AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(OAuthConstants.AccessTokenExpireMinutes),
                     AccessTokenFormat = new JwtTokenFormat(OAuthConstants.Issuer, OAuthConstants.Base64SymetricKey),
-                    Provider = new OAuthProvider
+                    Provider = new OAuthAuthorizationProvider
                     {
                         GetClientFunc = getClientFunc,
                         ValidateUserNameAndPassword = validateUserNameAndPasswordFunc
@@ -89,12 +95,12 @@ namespace SOLA.WebApi
                         RemoveRefreshTokenFunc = removeRefreshTokenAction
                     }
                 });
-
             app.UseJwtBearerAuthentication(
                 new JwtBearerAuthenticationOptions
                 {
                     AuthenticationMode = AuthenticationMode.Active,
                     AllowedAudiences = allowClients,
+                    Provider = new OAuthAuthenticationProvider(),
                     IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
                     {
                         new SymmetricKeyIssuerSecurityTokenProvider(OAuthConstants.Issuer, TextEncodings.Base64Url.Decode(OAuthConstants.Base64SymetricKey))
