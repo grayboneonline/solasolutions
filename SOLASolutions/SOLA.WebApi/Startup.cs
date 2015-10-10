@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Autofac;
+﻿using Autofac;
 using Owin;
 using System.Web.Http;
 using SOLA.MemoryCache;

@@ -8,7 +8,7 @@
         public const string HeaderKeyAllowedOrigin = "Access-Control-Allow-Origin";
         public const string ClaimKeySub = "sub";
         public const string ClaimKeySite = "sit";
-        public const string OwinKeyAllowedOrigin = "as:clientAllowedOrigin";
-        public const string OwinKeyRefreshTokenLifeTime = "as:clientRefreshTokenLifeTime";
+        public const string OwinKeyAllowedOrigin = "SOLA-clientAllowedOrigin";
+        public const string OwinKeyRefreshTokenLifeTime = "SOLA-clientRefreshTokenLifeTime";
     }
 }

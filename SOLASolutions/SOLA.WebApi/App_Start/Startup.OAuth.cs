@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autofac;
 using SOLA.Infrastructure.OAuth.Contracts;
 using SOLA.Infrastructure.OAuth.Formats;
@@ -80,9 +78,9 @@ namespace SOLA.WebApi
                 {
                     //For Dev enviroment only (on production should be AllowInsecureHttp = false)
                     AllowInsecureHttp = true,
-                    TokenEndpointPath = new PathString(OAuthConstants.TokenEndPoint),
-                    AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(OAuthConstants.AccessTokenExpireMinutes),
-                    AccessTokenFormat = new JwtTokenFormat(OAuthConstants.Issuer, OAuthConstants.Base64SymetricKey),
+                    TokenEndpointPath = new PathString(WebConfig.TokenEndPoint),
+                    AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(WebConfig.AccessTokenExpireMinutes),
+                    AccessTokenFormat = new JwtTokenFormat(WebConfig.Issuer, WebConfig.Base64SymetricKey),
                     Provider = new OAuthAuthorizationProvider
                     {
                         GetClientFunc = getClientFunc,
@@ -103,7 +101,7 @@ namespace SOLA.WebApi
                     Provider = new OAuthAuthenticationProvider(),
                     IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
                     {
-                        new SymmetricKeyIssuerSecurityTokenProvider(OAuthConstants.Issuer, TextEncodings.Base64Url.Decode(OAuthConstants.Base64SymetricKey))
+                        new SymmetricKeyIssuerSecurityTokenProvider(WebConfig.Issuer, TextEncodings.Base64Url.Decode(WebConfig.Base64SymetricKey))
                     }
                 });
         }
