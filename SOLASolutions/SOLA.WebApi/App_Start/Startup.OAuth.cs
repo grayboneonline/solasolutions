@@ -1,4 +1,6 @@
 ﻿using System;
+using Autofac;
+using SOLA.Infrastructure.OAuth.Contracts;
 using SOLA.Infrastructure.OAuth.Formats;
 using SOLA.Infrastructure.OAuth.Providers;
 using Microsoft.Owin;
@@ -8,8 +10,7 @@ using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using SOLA.Common;
-using SOLA.WebApi.Models;
-using SOLA.WebApi.TemporaryDatasource;
+using SOLA.WebApi.MemoryCaches;
 
 namespace SOLA.WebApi
 {
@@ -19,9 +20,11 @@ namespace SOLA.WebApi
 
 		private readonly Func<string, ClientInfo> getClientFunc = clientId =>
         {
-            var client = ApiClientDatasource.GetApiClientByClientId(clientId);
-            if (client == null)
+            var solaCache = Container.Resolve<ISOLACache>();
+            if (!solaCache.ApplicationClients.ContainsKey(clientId))
                 return null;
+
+            var client = solaCache.ApplicationClients[clientId];
 
             return new ClientInfo
             {
@@ -36,9 +39,9 @@ namespace SOLA.WebApi
         private readonly Func<string, string, string, DateTime, DateTime, string, bool> addRefreshTokenFunc = 
             (token, clientId, subject, issued, expires, protectedTicket) =>
         {
-            RefreshTokenDatasource.Add(new RefreshToken
+            var solaCache = Container.Resolve<ISOLACache>();
+            solaCache.RefreshTokens.Add(new RefreshToken
             {
-                Id = RefreshTokenDatasource.GetNewId(),
                 ClientId = clientId,
                 Subject = subject,
                 Token = token,
@@ -46,32 +49,33 @@ namespace SOLA.WebApi
                 ExpiresUtc = expires,
                 ProtectedTicket = protectedTicket,
             });
+            
             return true;
         };
 
         private readonly Func<string, string> getRefreshTokenProtectedTicketFunc = hashedToken =>
         {
-            var token = RefreshTokenDatasource.GetByToken(hashedToken);
-            return token == null ? null : token.ProtectedTicket;
+            var solaCache = Container.Resolve<ISOLACache>();
+            return solaCache.RefreshTokens.ContainsKey(hashedToken) ? solaCache.RefreshTokens[hashedToken].ProtectedTicket : null;
         };
 
-        private readonly Action<string> removeRefreshTokenAction = hashedToken => RefreshTokenDatasource.RemoveByToken(hashedToken);
+        private readonly Action<string> removeRefreshTokenAction = hashedToken => Container.Resolve<ISOLACache>().RefreshTokens.Remove(hashedToken);
 
         #endregion
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            var allowClients = ApiClientDatasource.GetAllClientId();
+            var allowClients = Container.Resolve<ISOLACache>().ApplicationClients.GetAllClientId();
 
             app.UseOAuthAuthorizationServer(
                 new OAuthAuthorizationServerOptions
                 {
                     //For Dev enviroment only (on production should be AllowInsecureHttp = false)
                     AllowInsecureHttp = true,
-                    TokenEndpointPath = new PathString(OAuthConstants.TokenEndPoint),
-                    AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(OAuthConstants.AccessTokenExpireMinutes),
-                    AccessTokenFormat = new JwtTokenFormat(OAuthConstants.Issuer, OAuthConstants.Base64SymetricKey),
-                    Provider = new OAuthProvider
+                    TokenEndpointPath = new PathString(WebConfig.TokenEndPoint),
+                    AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(WebConfig.AccessTokenExpireMinutes),
+                    AccessTokenFormat = new JwtTokenFormat(WebConfig.Issuer, WebConfig.Base64SymetricKey),
+                    Provider = new OAuthAuthorizationProvider
                     {
                         GetClientFunc = getClientFunc,
                         ValidateUserNameAndPassword = validateUserNameAndPasswordFunc
@@ -83,15 +87,15 @@ namespace SOLA.WebApi
                         RemoveRefreshTokenFunc = removeRefreshTokenAction
                     }
                 });
-
             app.UseJwtBearerAuthentication(
                 new JwtBearerAuthenticationOptions
                 {
                     AuthenticationMode = AuthenticationMode.Active,
                     AllowedAudiences = allowClients,
+                    Provider = new OAuthAuthenticationProvider(),
                     IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
                     {
-                        new SymmetricKeyIssuerSecurityTokenProvider(OAuthConstants.Issuer, TextEncodings.Base64Url.Decode(OAuthConstants.Base64SymetricKey))
+                        new SymmetricKeyIssuerSecurityTokenProvider(WebConfig.Issuer, TextEncodings.Base64Url.Decode(WebConfig.Base64SymetricKey))
                     }
                 });
         }
