@@ -1,4 +1,4 @@
-﻿namespace SOLA.MemoryCache
+﻿namespace SOLA.Infrastructure.MemoryCache
 {
     public class CacheObject
     {

@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0EADC919-4C2A-42B3-A7CA-CF959CBF72A5}</ProjectGuid>
+    <ProjectGuid>{882B6EC0-0E79-466A-8460-EAE34CA97E48}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SOLA.DataAccess</RootNamespace>
-    <AssemblyName>SOLA.DataAccess</AssemblyName>
+    <RootNamespace>SOLA.Infrastructure.MemoryCache</RootNamespace>
+    <AssemblyName>SOLA.Infrastructure.MemoryCache</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -40,17 +40,13 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccessModule.cs" />
+    <Compile Include="CacheManager.cs" />
+    <Compile Include="CacheObject.cs" />
+    <Compile Include="MemoryCacheModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\SOLA.Infrastructure.PetaPoco\SOLA.Infrastructure.PetaPoco.csproj">
-      <Project>{8a551a79-86d9-4288-bcfe-d9204cc381bf}</Project>
-      <Name>SOLA.Infrastructure.PetaPoco</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

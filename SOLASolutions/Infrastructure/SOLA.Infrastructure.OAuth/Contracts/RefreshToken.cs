@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace SOLA.WebApi.TemporaryDatasource
+namespace SOLA.Infrastructure.OAuth.Contracts
 {
-    public class RefreshTokenCache : Dictionary<string, RefreshToken>
-    {
-        public void Add(RefreshToken refreshToken)
-        {
-            Add(refreshToken.Token, refreshToken);
-        }
-    }
-
     public class RefreshToken
     {
-        public int Id { get; set; }
-
         public string Token { get; set; }
 
         public string Subject { get; set; }

@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace SOLA.MemoryCache
+namespace SOLA.Infrastructure.MemoryCache
 {
     public class MemoryCacheModule : Module
     {

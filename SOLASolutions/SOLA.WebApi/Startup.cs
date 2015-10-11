@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Owin;
 using System.Web.Http;
-using SOLA.MemoryCache;
+using SOLA.WebApi.MemoryCaches;
 using SOLA.WebApi.TemporaryDatasource;
 
 namespace SOLA.WebApi
@@ -28,11 +28,10 @@ namespace SOLA.WebApi
 
         public void SetMemoryCache()
         {
-            var cacheManager = Container.Resolve<ICacheManager>();
+            var solaCache = Container.Resolve<ISOLACache>();
 
-            cacheManager.Initialize();
-            cacheManager.Set(CacheKey.ApiClients, new ApplicationClientCache(ApplicationClientDatasource.Data));
-            cacheManager.Set(CacheKey.RefreshTokens, new RefreshTokenCache());
+            solaCache.Initialize();
+            solaCache.ApplicationClients.AddRange(ApplicationClientDatasource.Data);
         }
     }
 }

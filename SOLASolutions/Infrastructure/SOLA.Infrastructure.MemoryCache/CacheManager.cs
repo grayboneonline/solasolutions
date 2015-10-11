@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SOLA.MemoryCache
+namespace SOLA.Infrastructure.MemoryCache
 {
     public interface ICacheManager
     {
@@ -45,7 +45,7 @@ namespace SOLA.MemoryCache
 
     public enum CacheKey
     {
-        ApiClients = 1,
+        ApplicationClients = 1,
         RefreshTokens = 2,
         UserSessions = 3,
     }

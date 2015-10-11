@@ -2,7 +2,9 @@
 using Autofac;
 using Autofac.Integration.WebApi;
 using Owin;
-using SOLA.MemoryCache;
+using SOLA.Business;
+using SOLA.Infrastructure.MemoryCache;
+using SOLA.WebApi.MemoryCaches;
 
 namespace SOLA.WebApi
 {
@@ -15,7 +17,10 @@ namespace SOLA.WebApi
             var builder = new ContainerBuilder();
 
             //register types, modules ...
+            builder.RegisterType<SOLACache>().As<ISOLACache>().InstancePerRequest();
+
             builder.RegisterModule<MemoryCacheModule>();
+            builder.RegisterModule<BusinessModule>();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 

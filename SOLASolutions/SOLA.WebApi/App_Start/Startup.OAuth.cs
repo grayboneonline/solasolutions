@@ -10,8 +10,7 @@ using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using SOLA.Common;
-using SOLA.MemoryCache;
-using SOLA.WebApi.TemporaryDatasource;
+using SOLA.WebApi.MemoryCaches;
 
 namespace SOLA.WebApi
 {
@@ -21,10 +20,11 @@ namespace SOLA.WebApi
 
 		private readonly Func<string, ClientInfo> getClientFunc = clientId =>
         {
-            var cacheManager = Container.Resolve<ICacheManager>();
-            var client = cacheManager.Get<ApplicationClientCache>(CacheKey.ApiClients).Get(clientId);
-            if (client == null)
+            var solaCache = Container.Resolve<ISOLACache>();
+            if (!solaCache.ApplicationClients.ContainsKey(clientId))
                 return null;
+
+            var client = solaCache.ApplicationClients[clientId];
 
             return new ClientInfo
             {
@@ -39,8 +39,8 @@ namespace SOLA.WebApi
         private readonly Func<string, string, string, DateTime, DateTime, string, bool> addRefreshTokenFunc = 
             (token, clientId, subject, issued, expires, protectedTicket) =>
         {
-            var cacheManager = Container.Resolve<ICacheManager>();
-            cacheManager.Get<RefreshTokenCache>(CacheKey.RefreshTokens).Add(new RefreshToken
+            var solaCache = Container.Resolve<ISOLACache>();
+            solaCache.RefreshTokens.Add(new RefreshToken
             {
                 ClientId = clientId,
                 Subject = subject,
@@ -55,23 +55,17 @@ namespace SOLA.WebApi
 
         private readonly Func<string, string> getRefreshTokenProtectedTicketFunc = hashedToken =>
         {
-            var cacheManager = Container.Resolve<ICacheManager>();
-            var token = cacheManager.Get<RefreshTokenCache>(CacheKey.RefreshTokens)[hashedToken];
-            return token == null ? null : token.ProtectedTicket;
+            var solaCache = Container.Resolve<ISOLACache>();
+            return solaCache.RefreshTokens.ContainsKey(hashedToken) ? solaCache.RefreshTokens[hashedToken].ProtectedTicket : null;
         };
 
-        private readonly Action<string> removeRefreshTokenAction = hashedToken =>
-        {
-            var cacheManager = Container.Resolve<ICacheManager>();
-            cacheManager.Get<RefreshTokenCache>(CacheKey.RefreshTokens).Remove(hashedToken);
-        };
+        private readonly Action<string> removeRefreshTokenAction = hashedToken => Container.Resolve<ISOLACache>().RefreshTokens.Remove(hashedToken);
 
         #endregion
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            var cacheManager = Container.Resolve<ICacheManager>();
-            var allowClients = cacheManager.Get<ApplicationClientCache>(CacheKey.ApiClients).GetAllClientId();
+            var allowClients = Container.Resolve<ISOLACache>().ApplicationClients.GetAllClientId();
 
             app.UseOAuthAuthorizationServer(
                 new OAuthAuthorizationServerOptions
