@@ -34,11 +34,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.DataAccess", "DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.MemoryCache", "Infrastructure\SOLA.MemoryCache\SOLA.MemoryCache.csproj", "{882B6EC0-0E79-466A-8460-EAE34CA97E48}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database_script", "database_script", "{EADCEABA-F356-4BAB-827E-8DBF02D7C1D0}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\Desktop\customer_script.sql = ..\..\..\..\Desktop\customer_script.sql
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
