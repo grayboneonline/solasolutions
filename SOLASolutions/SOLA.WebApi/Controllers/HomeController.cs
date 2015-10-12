@@ -11,7 +11,7 @@ namespace SOLA.WebApi.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return Content("works");
+            return View();
         }
     }
 }

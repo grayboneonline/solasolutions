@@ -7,6 +7,11 @@ namespace SOLA.Infrastructure.WebApi.Base
 {
     public class BaseApiController : ApiController
     {
+        public string CustomerSite
+        {
+            get { return Request.Properties[WebApiContants.RequestKeyCustomerSite].ToString(); }
+        }
+
         public IHttpActionResult Ok(string message = "")
         {
             return CreateResponse(Request, HttpStatusCode.OK, message);
@@ -41,8 +46,6 @@ namespace SOLA.Infrastructure.WebApi.Base
         {
             return CreateResponse(Request, HttpStatusCode.BadRequest, new HttpError(modelState, true), "Invalid request data.");
         }
-
-
 
         private ApiResult CreateResponse(HttpRequestMessage request, HttpStatusCode statusCode, string message)
         {

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using SOLA.DataAccess.Contracts;
 
 namespace SOLA.DataAccess
 {
@@ -6,7 +7,7 @@ namespace SOLA.DataAccess
     {
         protected override void Load(ContainerBuilder builder)
         {
-            
+            builder.RegisterType<UserDA>().As<IUserDA>().InstancePerRequest();
         }
     }
 }

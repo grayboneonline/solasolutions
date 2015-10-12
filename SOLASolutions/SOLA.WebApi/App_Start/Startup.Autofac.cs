@@ -17,7 +17,7 @@ namespace SOLA.WebApi
             var builder = new ContainerBuilder();
 
             //register types, modules ...
-            builder.RegisterType<SOLACache>().As<ISOLACache>().InstancePerRequest();
+            builder.RegisterType<SOLACache>().As<ISOLACache>().InstancePerDependency();
 
             builder.RegisterModule<MemoryCacheModule>();
             builder.RegisterModule<BusinessModule>();

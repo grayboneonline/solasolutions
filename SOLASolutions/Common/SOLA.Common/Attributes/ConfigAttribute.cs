@@ -24,10 +24,17 @@ namespace SOLA.Common.Attributes
                 var attribute = prop.GetCustomAttribute<ConfigAttribute>();
                 if (attribute != null)
                 {
-                    prop.SetValue(null,
-                        attribute.Type == ConfigType.ConnectionString
-                            ? ConfigurationManager.ConnectionStrings[attribute.Key].ConnectionString
-                            : Convert.ChangeType(ConfigurationManager.AppSettings[attribute.Key], prop.PropertyType));
+                    try
+                    {
+                        prop.SetValue(null,
+                            attribute.Type == ConfigType.ConnectionString
+                                ? ConfigurationManager.ConnectionStrings[attribute.Key].ConnectionString
+                                : Convert.ChangeType(ConfigurationManager.AppSettings[attribute.Key], prop.PropertyType));
+                    }
+                    catch
+                    {
+                        
+                    }
                 }
             }
         }

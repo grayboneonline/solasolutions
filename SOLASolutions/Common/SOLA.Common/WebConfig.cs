@@ -4,16 +4,16 @@ namespace SOLA.Common
 {
     public static class WebConfig
     {
-        [Config("SOLA-TokenEndPoint")]
+        [Config("Auth-TokenEndPoint")]
         public static string TokenEndPoint { get; set; }
 
-        [Config("SOLA-Issuer")]
+        [Config("Auth-Issuer")]
         public static string Issuer { get; set; }
 
-        [Config("SOLA-Base64SymetricKey")]
+        [Config("Auth-Base64SymetricKey")]
         public static string Base64SymetricKey { get; set; }
 
-        [Config("SOLA-AccessTokenExpireMinutes")]
+        [Config("Auth-AccessTokenExpireMinutes")]
         public static int AccessTokenExpireMinutes { get; set; }
 
         static WebConfig()

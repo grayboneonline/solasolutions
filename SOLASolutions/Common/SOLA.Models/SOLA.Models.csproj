@@ -41,6 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\SOLA.Infrastructure.PetaPoco\SOLA.Infrastructure.PetaPoco.csproj">
+      <Project>{8a551a79-86d9-4288-bcfe-d9204cc381bf}</Project>
+      <Name>SOLA.Infrastructure.PetaPoco</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
