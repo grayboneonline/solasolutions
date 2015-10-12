@@ -54,7 +54,6 @@
     <Compile Include="Base\ApiResponse.cs" />
     <Compile Include="Base\ApiResult.cs" />
     <Compile Include="Base\BaseApiController.cs" />
-    <Compile Include="MessageHandlers\RetrieveDataMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebApiContants.cs" />
   </ItemGroup>

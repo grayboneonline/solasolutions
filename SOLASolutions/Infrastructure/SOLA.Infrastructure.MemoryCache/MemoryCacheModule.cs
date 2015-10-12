@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using SOLA.Infrastructure.MemoryCache.LifeTimeScope;
+using SOLA.Infrastructure.MemoryCache.RequestScope;
 
 namespace SOLA.Infrastructure.MemoryCache
 {
@@ -6,7 +8,9 @@ namespace SOLA.Infrastructure.MemoryCache
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CacheManager>().As<ICacheManager>().SingleInstance();
+            builder.RegisterType<RequestScopeCache>().As<IRequestScopeCache>().InstancePerLifetimeScope();
+
+            builder.RegisterType<LifeTimeScopeCache>().As<ILifeTimeScopeCache>().SingleInstance();
         }
     }
 }

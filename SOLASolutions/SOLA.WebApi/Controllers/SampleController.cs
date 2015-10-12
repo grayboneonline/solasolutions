@@ -8,16 +8,16 @@ namespace SOLA.WebApi.Controllers
     [SOLAAuthorize]
     public class SampleController : BaseApiController
     {
-        private readonly ISOLACache solaCache;
-        public SampleController(ISOLACache solaCache)
+        private readonly ICacheHelper cacheHelper;
+        public SampleController(ICacheHelper cacheHelper)
         {
-            this.solaCache = solaCache;
+            this.cacheHelper = cacheHelper;
         }
 
         public IHttpActionResult Get()
         {
             
-            return Ok(solaCache.RefreshTokens.Values);
+            return Ok(cacheHelper.LifeTimeScope.RefreshTokens.Values);
         }
     }
 }

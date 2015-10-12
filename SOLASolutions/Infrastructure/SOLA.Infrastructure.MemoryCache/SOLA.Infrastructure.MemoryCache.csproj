@@ -40,18 +40,16 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CacheManager.cs" />
+    <Compile Include="RequestScope\RequestScopeCache.cs" />
     <Compile Include="CacheObject.cs" />
+    <Compile Include="LifeTimeScope\LifeTimeScopeCache.cs" />
     <Compile Include="MemoryCacheModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LifeTimeScope\" />
-    <Folder Include="RequestScope\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

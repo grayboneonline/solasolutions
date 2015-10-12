@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using SOLA.Infrastructure.WebApi.MessageHandlers;
 
 namespace SOLA.WebApi
 {
@@ -8,7 +7,6 @@ namespace SOLA.WebApi
         public static void ConfigureWebApi()
         {
             // Web API configuration and services
-            HttpConfig.MessageHandlers.Add(new RetrieveDataMessageHandler());
 
             // Web API routes
             HttpConfig.MapHttpAttributeRoutes();

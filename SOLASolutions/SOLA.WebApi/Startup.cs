@@ -28,10 +28,10 @@ namespace SOLA.WebApi
 
         public void SetMemoryCache()
         {
-            var solaCache = Container.Resolve<ISOLACache>();
+            var cacheHelper = Container.Resolve<ICacheHelper>();
 
-            solaCache.Initialize();
-            solaCache.ApplicationClients.AddRange(ApplicationClientDatasource.Data);
+            cacheHelper.LifeTimeScope.Initialize();
+            cacheHelper.LifeTimeScope.ApplicationClients.AddRange(ApplicationClientDatasource.Data);
         }
     }
 }

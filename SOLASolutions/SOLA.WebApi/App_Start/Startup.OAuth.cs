@@ -20,11 +20,11 @@ namespace SOLA.WebApi
 
 		private readonly Func<string, ClientInfo> getClientFunc = clientId =>
         {
-            var solaCache = Container.Resolve<ISOLACache>();
-            if (!solaCache.ApplicationClients.ContainsKey(clientId))
+            var cacheHelper = Container.Resolve<ICacheHelper>();
+            if (!cacheHelper.LifeTimeScope.ApplicationClients.ContainsKey(clientId))
                 return null;
 
-            var client = solaCache.ApplicationClients[clientId];
+            var client = cacheHelper.LifeTimeScope.ApplicationClients[clientId];
 
             return new ClientInfo
             {
@@ -39,8 +39,8 @@ namespace SOLA.WebApi
         private readonly Func<string, string, string, DateTime, DateTime, string, bool> addRefreshTokenFunc = 
             (token, clientId, subject, issued, expires, protectedTicket) =>
         {
-            var solaCache = Container.Resolve<ISOLACache>();
-            solaCache.RefreshTokens.Add(new RefreshToken
+            var cacheHelper = Container.Resolve<ICacheHelper>();
+            cacheHelper.LifeTimeScope.RefreshTokens.Add(new RefreshToken
             {
                 ClientId = clientId,
                 Subject = subject,
@@ -55,17 +55,17 @@ namespace SOLA.WebApi
 
         private readonly Func<string, string> getRefreshTokenProtectedTicketFunc = hashedToken =>
         {
-            var solaCache = Container.Resolve<ISOLACache>();
-            return solaCache.RefreshTokens.ContainsKey(hashedToken) ? solaCache.RefreshTokens[hashedToken].ProtectedTicket : null;
+            var cacheHelper = Container.Resolve<ICacheHelper>();
+            return cacheHelper.LifeTimeScope.RefreshTokens.ContainsKey(hashedToken) ? cacheHelper.LifeTimeScope.RefreshTokens[hashedToken].ProtectedTicket : null;
         };
 
-        private readonly Action<string> removeRefreshTokenAction = hashedToken => Container.Resolve<ISOLACache>().RefreshTokens.Remove(hashedToken);
+        private readonly Action<string> removeRefreshTokenAction = hashedToken => Container.Resolve<ICacheHelper>().LifeTimeScope.RefreshTokens.Remove(hashedToken);
 
         #endregion
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            var allowClients = Container.Resolve<ISOLACache>().ApplicationClients.GetAllClientId();
+            var allowClients = Container.Resolve<ICacheHelper>().LifeTimeScope.ApplicationClients.GetAllClientId();
 
             app.UseOAuthAuthorizationServer(
                 new OAuthAuthorizationServerOptions

@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SOLA.Infrastructure.MemoryCache
+namespace SOLA.Infrastructure.MemoryCache.RequestScope
 {
-    public interface ICacheManager
+    public interface IRequestScopeCache
     {
-        void Initialize();
-        void Set<T>(CacheKey key, T data, bool overwrite = false);
-        T Get<T>(CacheKey key);
+        void Set<T>(RequestScopeCacheKey key, T data, bool overwrite = false);
+        T Get<T>(RequestScopeCacheKey key);
     }
 
-    public class CacheManager : ICacheManager
+    public class RequestScopeCache : IRequestScopeCache
     {
-        private Dictionary<CacheKey, CacheObject> memoryCache;
+        private Dictionary<RequestScopeCacheKey, CacheObject> memoryCache;
 
-        public void Initialize()
+        public void Set<T>(RequestScopeCacheKey key, T data, bool overwrite = false)
         {
-            memoryCache = new Dictionary<CacheKey, CacheObject>();
-        }
+            if (memoryCache == null)
+                memoryCache = new Dictionary<RequestScopeCacheKey, CacheObject>();
 
-        public void Set<T>(CacheKey key, T data, bool overwrite = false)
-        {
             var cacheObj = CacheObject<T>.Create(data);
             if (memoryCache.ContainsKey(key))
             {
@@ -31,8 +28,11 @@ namespace SOLA.Infrastructure.MemoryCache
                 memoryCache.Add(key, cacheObj);
         }
 
-        public T Get<T>(CacheKey key)
+        public T Get<T>(RequestScopeCacheKey key)
         {
+            if (memoryCache == null)
+                return default(T);
+
             if (!memoryCache.ContainsKey(key))
                 throw new ArgumentException(key + " is not existed.");
             var cacheObj = memoryCache[key] as CacheObject<T>;
@@ -43,10 +43,8 @@ namespace SOLA.Infrastructure.MemoryCache
         }
     }
 
-    public enum CacheKey
+    public enum RequestScopeCacheKey
     {
-        ApplicationClients = 1,
-        RefreshTokens = 2,
-        UserSessions = 3,
+        Customer = 1,
     }
 }

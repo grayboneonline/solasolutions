@@ -4,6 +4,8 @@ using Autofac.Integration.WebApi;
 using Owin;
 using SOLA.Business;
 using SOLA.Infrastructure.MemoryCache;
+using SOLA.Infrastructure.WebApi.Base;
+using SOLA.WebApi.Filters;
 using SOLA.WebApi.MemoryCaches;
 
 namespace SOLA.WebApi
@@ -17,12 +19,17 @@ namespace SOLA.WebApi
             var builder = new ContainerBuilder();
 
             //register types, modules ...
-            builder.RegisterType<SOLACache>().As<ISOLACache>().InstancePerDependency();
+            builder.RegisterType<CacheHelper>().As<ICacheHelper>();
+
+            builder.RegisterType<HandleRequestFilter>()
+                .AsWebApiActionFilterFor<BaseApiController>()
+                .InstancePerRequest();
 
             builder.RegisterModule<MemoryCacheModule>();
             builder.RegisterModule<BusinessModule>();
 
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterWebApiFilterProvider(HttpConfig);
 
             Container = builder.Build();
             HttpConfig.DependencyResolver = new AutofacWebApiDependencyResolver(Container);
