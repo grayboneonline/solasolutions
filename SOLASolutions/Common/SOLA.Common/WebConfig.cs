@@ -16,6 +16,9 @@ namespace SOLA.Common
         [Config("Auth-AccessTokenExpireMinutes")]
         public static int AccessTokenExpireMinutes { get; set; }
 
+        [Config("AdminConnectionString", ConfigType.ConnectionString)]
+        public static string AdminConnectionString { get; set; }
+
         static WebConfig()
         {
             ConfigAttribute.ReadConfigForType(typeof(WebConfig));

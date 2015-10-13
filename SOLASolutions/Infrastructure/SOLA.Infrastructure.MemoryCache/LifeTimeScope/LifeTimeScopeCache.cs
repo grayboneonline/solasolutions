@@ -47,5 +47,6 @@ namespace SOLA.Infrastructure.MemoryCache.LifeTimeScope
     {
         ApplicationClients = 1,
         RefreshTokens = 2,
+        CustomerDataSources = 3,
     }
 }

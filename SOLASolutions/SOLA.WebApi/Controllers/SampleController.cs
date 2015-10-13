@@ -5,7 +5,6 @@ using SOLA.WebApi.MemoryCaches;
 
 namespace SOLA.WebApi.Controllers
 {
-    [SOLAAuthorize]
     public class SampleController : BaseApiController
     {
         private readonly ICacheHelper cacheHelper;
@@ -17,7 +16,7 @@ namespace SOLA.WebApi.Controllers
         public IHttpActionResult Get()
         {
             
-            return Ok(cacheHelper.LifeTimeScope.RefreshTokens.Values);
+            return Ok(cacheHelper.LifeTimeScope.CustomerDataSources.Values);
         }
     }
 }

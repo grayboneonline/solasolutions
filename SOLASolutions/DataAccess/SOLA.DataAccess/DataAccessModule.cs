@@ -1,5 +1,6 @@
 ﻿using Autofac;
-using SOLA.DataAccess.Contracts;
+using SOLA.Common;
+using SOLA.DataAccess.Admin;
 
 namespace SOLA.DataAccess
 {
@@ -7,7 +8,21 @@ namespace SOLA.DataAccess
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<UserDA>().As<IUserDA>().InstancePerRequest();
+            builder.Register(c => new AdminConfig {ConnectionString = WebConfig.AdminConnectionString})
+                   .As<IAdminConfig>()
+                   .InstancePerLifetimeScope();
+
+            builder.RegisterType<AzureSqlServerDA>()
+                   .As<IAzureSqlServerDA>()
+                   .InstancePerLifetimeScope();
+
+            builder.RegisterType<CustomerDA>()
+                   .As<ICustomerDA>()
+                   .InstancePerLifetimeScope();
+
+            builder.RegisterType<UserDA>()
+                   .As<IUserDA>()
+                   .InstancePerLifetimeScope();
         }
     }
 }

@@ -40,6 +40,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AdminManagement.cs" />
     <Compile Include="BusinessModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -47,6 +48,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\SOLA.Models\SOLA.Models.csproj">
+      <Project>{94A91B7C-9CBB-4359-976B-D3FAC3DBA0E3}</Project>
+      <Name>SOLA.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DataAccess\SOLA.DataAccess\SOLA.DataAccess.csproj">
       <Project>{0eadc919-4c2a-42b3-a7ca-cf959cbf72a5}</Project>
       <Name>SOLA.DataAccess</Name>

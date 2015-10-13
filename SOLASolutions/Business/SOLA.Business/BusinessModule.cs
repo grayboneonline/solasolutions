@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using SOLA.Business.Admin;
 using SOLA.DataAccess;
 
 namespace SOLA.Business
@@ -7,6 +8,8 @@ namespace SOLA.Business
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<AdminManagement>().As<IAdminManagement>().InstancePerLifetimeScope();
+
             builder.RegisterModule<DataAccessModule>();
         }
     }
