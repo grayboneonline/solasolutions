@@ -155,7 +155,9 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Views\resources\app\app.js" />
-    <Content Include="Views\resources\css\angular-material.min.css" />
+    <Content Include="Views\resources\app\directives.js" />
+    <Content Include="Views\resources\css\angular-material\angular-material.min.css" />
+    <Content Include="Views\resources\css\site.css" />
     <Content Include="Views\resources\js\angular-material\angular-material.js" />
     <Content Include="Views\resources\js\angular\angular-animate.min.js" />
     <Content Include="Views\resources\js\angular\angular-aria.min.js" />
@@ -167,6 +169,7 @@
     <Content Include="Views\resources\js\angular\angular-sanitize.min.js" />
     <Content Include="Views\resources\js\angular\angular-touch.min.js" />
     <Content Include="Views\resources\js\angular\angular.min.js" />
+    <Content Include="Views\resources\js\global.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
