@@ -156,9 +156,21 @@
     <Content Include="Global.asax" />
     <Content Include="Views\resources\app\app.js" />
     <Content Include="Views\resources\app\directives.js" />
+    <Content Include="Views\resources\app\login\login.controller.js" />
+    <Content Include="Views\resources\app\login\login.html" />
+    <Content Include="Views\resources\app\services\login.service.js" />
+    <Content Include="Views\resources\app\main\main.controller.js" />
+    <Content Include="Views\resources\app\main\main.html" />
     <Content Include="Views\resources\css\angular-material\angular-material.min.css" />
+    <Content Include="Views\resources\css\animate.min.css" />
     <Content Include="Views\resources\css\site.css" />
     <Content Include="Views\resources\js\angular-material\angular-material.js" />
+    <Content Include="Views\resources\js\angular-plugin\angular-local-storage.min.js" />
+    <Content Include="Views\resources\js\angular-plugin\angular-translate-loader-url.min.js" />
+    <Content Include="Views\resources\js\angular-plugin\angular-translate.min.js" />
+    <Content Include="Views\resources\js\angular-plugin\angular-ui-router.min.js" />
+    <Content Include="Views\resources\js\angular-plugin\angular-utf8-base64.min.js" />
+    <Content Include="Views\resources\js\angular-plugin\http-auth-interceptor.js" />
     <Content Include="Views\resources\js\angular\angular-animate.min.js" />
     <Content Include="Views\resources\js\angular\angular-aria.min.js" />
     <Content Include="Views\resources\js\angular\angular-cookies.min.js" />
@@ -170,6 +182,8 @@
     <Content Include="Views\resources\js\angular\angular-touch.min.js" />
     <Content Include="Views\resources\js\angular\angular.min.js" />
     <Content Include="Views\resources\js\global.js" />
+    <Content Include="Views\resources\js\ocLazyLoad.min.js" />
+    <Content Include="Views\resources\js\script.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +233,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\resources\app\services.shared\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Business\SOLA.Business\SOLA.Business.csproj">
