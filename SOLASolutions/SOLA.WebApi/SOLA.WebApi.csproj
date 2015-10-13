@@ -207,8 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\resources\js\angular\angular-animate.min.js.map" />
     <Content Include="Views\resources\js\angular\angular-aria.min.js.map" />
