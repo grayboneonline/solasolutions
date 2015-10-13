@@ -3,7 +3,7 @@ using SOLA.Models.Admin;
 
 namespace SOLA.WebApi.MemoryCaches.CacheObjects
 {
-    public class CustomerCache : Dictionary<string, CustomerDataSource>
+    public class CustomerDataSourceCache : Dictionary<string, CustomerDataSource>
     {
         public void AddRange(IEnumerable<CustomerDataSource> customers)
         {

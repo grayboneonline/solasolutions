@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using SOLA.DataAccess.Helpers;
 using SOLA.Models.Admin;
 
 namespace SOLA.DataAccess.Admin
@@ -10,18 +9,16 @@ namespace SOLA.DataAccess.Admin
         IEnumerable<CustomerDataSource> GetAllAzureSqlDataSources();
     }
 
-    public class CustomerDA : ICustomerDA
+    public class CustomerDA : BaseDA, ICustomerDA
     {
-        private readonly IAdminConfig config;
 
-        public CustomerDA(IAdminConfig config)
+        public CustomerDA(IAdminConfig config) : base(config)
         {
-            this.config = config;
         }
 
         public IEnumerable<Customer> GetAll()
         {
-            return DataAccessHelper.Select<Customer>(config);
+            return Select<Customer>();
         }
 
         public IEnumerable<CustomerDataSource> GetAllAzureSqlDataSources()
@@ -34,7 +31,7 @@ namespace SOLA.DataAccess.Admin
             var query = "SELECT {0} " +
                         "FROM Customers INNER JOIN AzureSQLServers ON Customers.AzureSQLServerId = AzureSQLServers.AzureSQLServerId";
 
-            return DataAccessHelper.Select<CustomerDataSource>(config, string.Format(query, string.Join(",", columns)));
+            return Select<CustomerDataSource>(string.Format(query, string.Join(",", columns)));
         }
     }
 }

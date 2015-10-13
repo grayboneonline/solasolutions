@@ -197,7 +197,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="MemoryCaches\CacheObjects\CustomerCache.cs" />
+    <Compile Include="MemoryCaches\CacheObjects\CustomerDataSourceCache.cs" />
     <Compile Include="MemoryCaches\CacheObjects\ApplicationClientCache.cs" />
     <Compile Include="MemoryCaches\CacheHelper.cs" />
     <Compile Include="MemoryCaches\CacheObjects\RefreshTokenCache.cs" />

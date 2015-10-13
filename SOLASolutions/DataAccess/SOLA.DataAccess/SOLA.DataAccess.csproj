@@ -44,7 +44,7 @@
     <Compile Include="Admin\AdminConfig.cs" />
     <Compile Include="Admin\CustomerDA.cs" />
     <Compile Include="Admin\AzureSqlServerDA.cs" />
-    <Compile Include="Helpers\DataAccessHelper.cs" />
+    <Compile Include="BaseDA.cs" />
     <Compile Include="DataAccessModule.cs" />
     <Compile Include="IConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,6 +61,10 @@
     <ProjectReference Include="..\..\Common\SOLA.Models\SOLA.Models.csproj">
       <Project>{94a91b7c-9cbb-4359-976b-d3fac3dba0e3}</Project>
       <Name>SOLA.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Infrastructure\SOLA.Infrastructure.MemoryCache\SOLA.Infrastructure.MemoryCache.csproj">
+      <Project>{882b6ec0-0e79-466a-8460-eae34ca97e48}</Project>
+      <Name>SOLA.Infrastructure.MemoryCache</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\SOLA.Infrastructure.PetaPoco\SOLA.Infrastructure.PetaPoco.csproj">
       <Project>{8a551a79-86d9-4288-bcfe-d9204cc381bf}</Project>

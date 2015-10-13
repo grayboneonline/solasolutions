@@ -45,6 +45,6 @@ namespace SOLA.Infrastructure.MemoryCache.RequestScope
 
     public enum RequestScopeCacheKey
     {
-        Customer = 1,
+        CustomerDataSource = 1,
     }
 }

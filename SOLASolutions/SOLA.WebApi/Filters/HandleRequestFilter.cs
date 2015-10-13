@@ -17,7 +17,7 @@ namespace SOLA.WebApi.Filters
         {
             var customer = actionContext.Request.RequestUri.Host.Split('.')[0];
 
-            cacheHelper.RequestScope.CustomerSiteName = customer;
+            cacheHelper.RequestScope.CustomerDataSource = cacheHelper.LifeTimeScope.CustomerDataSources[customer];
         }
 
         public void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)

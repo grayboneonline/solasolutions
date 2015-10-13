@@ -8,8 +8,12 @@ namespace SOLA.DataAccess
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c => new AdminConfig {ConnectionString = WebConfig.AdminConnectionString})
+            builder.Register(c => new AdminConfig { ConnectionString = WebConfig.AdminConnectionString })
                    .As<IAdminConfig>()
+                   .InstancePerLifetimeScope();
+
+            builder.RegisterType<CustomerConfig>()
+                   .As<ICustomerConfig>()
                    .InstancePerLifetimeScope();
 
             builder.RegisterType<AzureSqlServerDA>()

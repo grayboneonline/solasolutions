@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using SOLA.DataAccess.Helpers;
 using SOLA.Models.Admin;
 
 namespace SOLA.DataAccess.Admin
@@ -9,18 +8,16 @@ namespace SOLA.DataAccess.Admin
         IEnumerable<AzureSqlServer> GetAll();
     }
 
-    public class AzureSqlServerDA : IAzureSqlServerDA
+    public class AzureSqlServerDA : BaseDA, IAzureSqlServerDA
     {
-        private readonly IAdminConfig config;
 
-        public AzureSqlServerDA(IAdminConfig config)
+        public AzureSqlServerDA(IAdminConfig config) : base(config)
         {
-            this.config = config;
         }
 
         public IEnumerable<AzureSqlServer> GetAll()
         {
-            return DataAccessHelper.Select<AzureSqlServer>(config);
+            return Select<AzureSqlServer>();
         }
     }
 }

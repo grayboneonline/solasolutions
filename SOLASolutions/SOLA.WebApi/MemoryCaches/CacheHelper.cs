@@ -1,5 +1,6 @@
 ﻿using SOLA.Infrastructure.MemoryCache.LifeTimeScope;
 using SOLA.Infrastructure.MemoryCache.RequestScope;
+using SOLA.Models.Admin;
 using SOLA.WebApi.MemoryCaches.CacheObjects;
 
 namespace SOLA.WebApi.MemoryCaches
@@ -45,7 +46,7 @@ namespace SOLA.WebApi.MemoryCaches
             lifeTimeScopeCache.Initialize();
             lifeTimeScopeCache.Set(LifeTimeScopeCacheKey.ApplicationClients, new ApplicationClientCache());
             lifeTimeScopeCache.Set(LifeTimeScopeCacheKey.RefreshTokens, new RefreshTokenCache());
-            lifeTimeScopeCache.Set(LifeTimeScopeCacheKey.CustomerDataSources, new CustomerCache());
+            lifeTimeScopeCache.Set(LifeTimeScopeCacheKey.CustomerDataSources, new CustomerDataSourceCache());
         }
 
         public RefreshTokenCache RefreshTokens
@@ -58,9 +59,9 @@ namespace SOLA.WebApi.MemoryCaches
             get { return lifeTimeScopeCache.Get<ApplicationClientCache>(LifeTimeScopeCacheKey.ApplicationClients); }
         }
 
-        public CustomerCache CustomerDataSources
+        public CustomerDataSourceCache CustomerDataSources
         {
-            get { return lifeTimeScopeCache.Get<CustomerCache>(LifeTimeScopeCacheKey.CustomerDataSources); }
+            get { return lifeTimeScopeCache.Get<CustomerDataSourceCache>(LifeTimeScopeCacheKey.CustomerDataSources); }
         }
     }
 
@@ -72,10 +73,10 @@ namespace SOLA.WebApi.MemoryCaches
             this.requestScopeCache = requestScopeCache;
         }
 
-        public string CustomerSiteName
+        public CustomerDataSource CustomerDataSource
         {
-            get { return requestScopeCache.Get<string>(RequestScopeCacheKey.Customer); }
-            set { requestScopeCache.Set(RequestScopeCacheKey.Customer, value, true); }
+            get { return requestScopeCache.Get<CustomerDataSource>(RequestScopeCacheKey.CustomerDataSource); }
+            set { requestScopeCache.Set(RequestScopeCacheKey.CustomerDataSource, value, true); }
         }
     }
 }

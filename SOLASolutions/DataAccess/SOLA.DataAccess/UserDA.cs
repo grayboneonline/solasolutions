@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using PetaPoco;
 using SOLA.Models;
 
 namespace SOLA.DataAccess
@@ -13,42 +12,35 @@ namespace SOLA.DataAccess
         void Delete(int id);
     }
 
-    public class UserDA : IUserDA
+    public class UserDA : BaseDA, IUserDA
     {
-        
-        public UserDA()
+        public UserDA(ICustomerConfig config) : base(config)
         {
-
         }
 
         public IEnumerable<User> GetAll()
         {
-            var db = new Database("");
-            return db.Query<User>("SELECT * FROM [Users]");
+            return Select<User>();
         }
 
         public User GetById(int id)
         {
-            var db = new Database("");
-            return db.SingleOrDefault<User>("SELECT * FROM [Users] WHERE UserId = @0", id);
+            return Get<User>("SELECT * FROM [Users] WHERE UserId = @0", id);
         }
 
         public void Add(User user)
         {
-            var db = new Database("");
-            db.Insert(user);
+            Insert(user);
         }
 
         public void Update(User user)
         {
-            var db = new Database("");
-            db.Update(user);
+            Save(user);
         }
 
         public void Delete(int id)
         {
-            var db = new Database("");
-            db.Delete<User>(id);
+            Delete<User>(id);
         }
     }
 }
