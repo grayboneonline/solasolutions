@@ -1,5 +1,4 @@
-﻿using SOLA.Infrastructure.MemoryCache.RequestScope;
-using SOLA.Models.Admin;
+﻿using SOLA.Cache;
 
 namespace SOLA.DataAccess
 {
@@ -16,9 +15,9 @@ namespace SOLA.DataAccess
     {
         private const string ConnectionStringTmpl = "Data Source={0};Initial Catalog={1};User Id={2};Password={3}";
 
-        public CustomerConfig(IRequestScopeCache requestScopeCache)
+        public CustomerConfig(ICacheHelper cacheHelper)
         {
-            var dataSource = requestScopeCache.Get<CustomerDataSource>(RequestScopeCacheKey.CustomerDataSource);
+            var dataSource = cacheHelper.RequestScope.CustomerDataSource;
 
             ConnectionString = string.Format(ConnectionStringTmpl, dataSource.ServerName, dataSource.SiteName,
                 dataSource.UserName, dataSource.Password);

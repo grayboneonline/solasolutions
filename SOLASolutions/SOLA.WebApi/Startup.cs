@@ -2,7 +2,7 @@
 using Owin;
 using System.Web.Http;
 using SOLA.Business.Admin;
-using SOLA.WebApi.MemoryCaches;
+using SOLA.Cache;
 using SOLA.WebApi.TemporaryDatasource;
 
 namespace SOLA.WebApi

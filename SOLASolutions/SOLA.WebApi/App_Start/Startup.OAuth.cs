@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using SOLA.Cache;
 using SOLA.Infrastructure.OAuth.Contracts;
 using SOLA.Infrastructure.OAuth.Formats;
 using SOLA.Infrastructure.OAuth.Providers;
@@ -10,7 +11,6 @@ using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using SOLA.Common;
-using SOLA.WebApi.MemoryCaches;
 
 namespace SOLA.WebApi
 {
@@ -37,19 +37,10 @@ namespace SOLA.WebApi
 
         private readonly Func<string, string, bool> validateUserNameAndPasswordFunc = (username, password) => username == password;
 
-        private readonly Func<string, string, string, DateTime, DateTime, string, bool> addRefreshTokenFunc = 
-            (token, clientId, subject, issued, expires, protectedTicket) => Container.RunInRequestScope(requestScope =>
+        private readonly Func<RefreshToken, bool> addRefreshTokenFunc = refreshToken => Container.RunInRequestScope(requestScope =>
             {
                 var cacheHelper = requestScope.Resolve<ICacheHelper>();
-                cacheHelper.LifeTimeScope.RefreshTokens.Add(new RefreshToken
-                {
-                    ClientId = clientId,
-                    Subject = subject,
-                    Token = token,
-                    IssuedUtc = issued,
-                    ExpiresUtc = expires,
-                    ProtectedTicket = protectedTicket,
-                });
+                cacheHelper.LifeTimeScope.RefreshTokens.Add(refreshToken);
 
                 return true;
             });

@@ -1,7 +1,7 @@
 ﻿using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Autofac.Integration.WebApi;
-using SOLA.WebApi.MemoryCaches;
+using SOLA.Cache;
 
 namespace SOLA.WebApi.Filters
 {

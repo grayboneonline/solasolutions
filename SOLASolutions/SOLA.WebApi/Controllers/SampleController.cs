@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
+using SOLA.Cache;
 using SOLA.Infrastructure.WebApi.Attributes;
 using SOLA.Infrastructure.WebApi.Base;
-using SOLA.WebApi.MemoryCaches;
 
 namespace SOLA.WebApi.Controllers
 {

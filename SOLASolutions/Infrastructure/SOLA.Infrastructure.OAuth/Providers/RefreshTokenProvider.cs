@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security.Infrastructure;
+using SOLA.Infrastructure.OAuth.Contracts;
 
 namespace SOLA.Infrastructure.OAuth.Providers
 {
     public class RefreshTokenProvider : IAuthenticationTokenProvider
     {
-        public Func<string, string, string, DateTime, DateTime, string, bool> AddRefreshTokenFunc { get; set; }
+        public Func<RefreshToken, bool> AddRefreshTokenFunc { get; set; }
         public Func<string, string> GetRefreshTokenProtectedTicketFunc { get; set; }
         public Action<string> RemoveRefreshTokenFunc { get; set; }
  
@@ -24,7 +25,17 @@ namespace SOLA.Infrastructure.OAuth.Providers
                 context.Ticket.Properties.IssuedUtc = issuedDate;
                 context.Ticket.Properties.ExpiresUtc = expiresDate;
 
-                var result = AddRefreshTokenFunc(Helper.GetHash(refreshTokenId), clientid, context.Ticket.Identity.Name, issuedDate, expiresDate, context.SerializeTicket());
+                var refreshToken = new RefreshToken
+                {
+                    ClientId = clientid,
+                    Subject = context.Ticket.Identity.Name,
+                    Token = Helper.GetHash(refreshTokenId),
+                    IssuedUtc = issuedDate,
+                    ExpiresUtc = expiresDate,
+                    ProtectedTicket = context.SerializeTicket(),
+                };
+
+                var result = AddRefreshTokenFunc(refreshToken);
                 if(result)
                     context.SetToken(refreshTokenId);
             }
