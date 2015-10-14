@@ -29,12 +29,15 @@ namespace SOLA.WebApi
 
         public void SetMemoryCache()
         {
-            var cacheHelper = Container.Resolve<ICacheHelper>();
-            var adminManagement = Container.Resolve<IAdminManagement>();
+            Container.RunInRequestScope(requestScope =>
+            {
+                var cacheHelper = requestScope.Resolve<ICacheHelper>();
+                var adminManagement = requestScope.Resolve<IAdminManagement>();
 
-            cacheHelper.LifeTimeScope.Initialize();
-            cacheHelper.LifeTimeScope.ApplicationClients.AddRange(ApplicationClientDatasource.Data);
-            cacheHelper.LifeTimeScope.CustomerDataSources.AddRange(adminManagement.GetAllAzureSqlDataSources());
+                cacheHelper.LifeTimeScope.Initialize();
+                cacheHelper.LifeTimeScope.ApplicationClients.AddRange(ApplicationClientDatasource.Data);
+                cacheHelper.LifeTimeScope.CustomerDataSources.AddRange(adminManagement.GetAllAzureSqlDataSources());
+            });
         }
     }
 }

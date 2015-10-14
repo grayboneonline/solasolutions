@@ -18,54 +18,59 @@ namespace SOLA.WebApi
     {
         #region Function & Action
 
-		private readonly Func<string, ClientInfo> getClientFunc = clientId =>
-        {
-            var cacheHelper = Container.Resolve<ICacheHelper>();
-            if (!cacheHelper.LifeTimeScope.ApplicationClients.ContainsKey(clientId))
-                return null;
-
-            var client = cacheHelper.LifeTimeScope.ApplicationClients[clientId];
-
-            return new ClientInfo
+        private readonly Func<string, ClientInfo> getClientFunc =
+            clientId => Container.RunInRequestScope(requestScope =>
             {
-                AllowedOrigin = client.AllowedOrigin,
-                IsActive = client.IsActive,
-                RefreshTokenLifeTime = client.RefreshTokenLifeTime
-            };
-        };
+                var cacheHelper = requestScope.Resolve<ICacheHelper>();
+                if (!cacheHelper.LifeTimeScope.ApplicationClients.ContainsKey(clientId))
+                    return null;
+
+                var client = cacheHelper.LifeTimeScope.ApplicationClients[clientId];
+
+                return new ClientInfo
+                {
+                    AllowedOrigin = client.AllowedOrigin,
+                    IsActive = client.IsActive,
+                    RefreshTokenLifeTime = client.RefreshTokenLifeTime
+                };
+            });
 
         private readonly Func<string, string, bool> validateUserNameAndPasswordFunc = (username, password) => username == password;
 
         private readonly Func<string, string, string, DateTime, DateTime, string, bool> addRefreshTokenFunc = 
-            (token, clientId, subject, issued, expires, protectedTicket) =>
-        {
-            var cacheHelper = Container.Resolve<ICacheHelper>();
-            cacheHelper.LifeTimeScope.RefreshTokens.Add(new RefreshToken
+            (token, clientId, subject, issued, expires, protectedTicket) => Container.RunInRequestScope(requestScope =>
             {
-                ClientId = clientId,
-                Subject = subject,
-                Token = token,
-                IssuedUtc = issued,
-                ExpiresUtc = expires,
-                ProtectedTicket = protectedTicket,
+                var cacheHelper = requestScope.Resolve<ICacheHelper>();
+                cacheHelper.LifeTimeScope.RefreshTokens.Add(new RefreshToken
+                {
+                    ClientId = clientId,
+                    Subject = subject,
+                    Token = token,
+                    IssuedUtc = issued,
+                    ExpiresUtc = expires,
+                    ProtectedTicket = protectedTicket,
+                });
+
+                return true;
             });
-            
-            return true;
-        };
 
-        private readonly Func<string, string> getRefreshTokenProtectedTicketFunc = hashedToken =>
+        private readonly Func<string, string> getRefreshTokenProtectedTicketFunc = hashedToken => Container.RunInRequestScope(requestScope =>
         {
-            var cacheHelper = Container.Resolve<ICacheHelper>();
+            var cacheHelper = requestScope.Resolve<ICacheHelper>();
             return cacheHelper.LifeTimeScope.RefreshTokens.ContainsKey(hashedToken) ? cacheHelper.LifeTimeScope.RefreshTokens[hashedToken].ProtectedTicket : null;
-        };
+        });
 
-        private readonly Action<string> removeRefreshTokenAction = hashedToken => Container.Resolve<ICacheHelper>().LifeTimeScope.RefreshTokens.Remove(hashedToken);
+        private readonly Action<string> removeRefreshTokenAction = hashedToken => Container.RunInRequestScope(
+            requestScope =>
+            {
+                requestScope.Resolve<ICacheHelper>().LifeTimeScope.RefreshTokens.Remove(hashedToken);
+            });
 
         #endregion
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            var allowClients = Container.Resolve<ICacheHelper>().LifeTimeScope.ApplicationClients.GetAllClientId();
+            var allowClients = Container.RunInRequestScope(requestScope => requestScope.Resolve<ICacheHelper>().LifeTimeScope.ApplicationClients.GetAllClientId());
 
             app.UseOAuthAuthorizationServer(
                 new OAuthAuthorizationServerOptions

@@ -10,23 +10,23 @@ namespace SOLA.DataAccess
         {
             builder.Register(c => new AdminConfig { ConnectionString = WebConfig.AdminConnectionString })
                    .As<IAdminConfig>()
-                   .InstancePerLifetimeScope();
+                   .InstancePerRequest();
 
             builder.RegisterType<CustomerConfig>()
                    .As<ICustomerConfig>()
-                   .InstancePerLifetimeScope();
+                   .InstancePerRequest();
 
             builder.RegisterType<AzureSqlServerDA>()
                    .As<IAzureSqlServerDA>()
-                   .InstancePerLifetimeScope();
+                   .InstancePerRequest();
 
             builder.RegisterType<CustomerDA>()
                    .As<ICustomerDA>()
-                   .InstancePerLifetimeScope();
+                   .InstancePerRequest();
 
             builder.RegisterType<UserDA>()
                    .As<IUserDA>()
-                   .InstancePerLifetimeScope();
+                   .InstancePerRequest();
         }
     }
 }

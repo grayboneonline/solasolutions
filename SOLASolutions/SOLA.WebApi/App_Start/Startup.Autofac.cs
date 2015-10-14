@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Autofac;
 using Autofac.Integration.WebApi;
 using Owin;
@@ -19,7 +20,7 @@ namespace SOLA.WebApi
             var builder = new ContainerBuilder();
 
             //register types, modules ...
-            builder.RegisterType<CacheHelper>().As<ICacheHelper>();
+            builder.RegisterType<CacheHelper>().As<ICacheHelper>().InstancePerRequest();
 
             builder.RegisterType<HandleRequestFilter>()
                 .AsWebApiActionFilterFor<BaseApiController>()
@@ -36,6 +37,25 @@ namespace SOLA.WebApi
 
             app.UseAutofacMiddleware(Container);
             app.UseAutofacWebApi(HttpConfig);
+        }
+    }
+
+    public static class ContainerExtensions
+    {
+        public static T RunInRequestScope<T>(this IContainer container, Func<ILifetimeScope, T> func)
+        {
+            using (var requestScope = container.BeginLifetimeScope(Autofac.Core.Lifetime.MatchingScopeLifetimeTags.RequestLifetimeScopeTag))
+            {
+                return func(requestScope);
+            }
+        }
+
+        public static void RunInRequestScope(this IContainer container, Action<ILifetimeScope> action)
+        {
+            using (var requestScope = container.BeginLifetimeScope(Autofac.Core.Lifetime.MatchingScopeLifetimeTags.RequestLifetimeScopeTag))
+            {
+                action(requestScope);
+            }
         }
     }
 }

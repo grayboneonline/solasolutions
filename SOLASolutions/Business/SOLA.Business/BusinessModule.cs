@@ -8,7 +8,7 @@ namespace SOLA.Business
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<AdminManagement>().As<IAdminManagement>().InstancePerLifetimeScope();
+            builder.RegisterType<AdminManagement>().As<IAdminManagement>().InstancePerRequest();
 
             builder.RegisterModule<DataAccessModule>();
         }
