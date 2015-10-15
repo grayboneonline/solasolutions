@@ -70,7 +70,7 @@
       <Project>{8a551a79-86d9-4288-bcfe-d9204cc381bf}</Project>
       <Name>SOLA.Infrastructure.PetaPoco</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SOLA.Cache\SOLA.Cache.csproj">
+    <ProjectReference Include="..\..\Common\SOLA.Cache\SOLA.Cache.csproj">
       <Project>{8f52ac9a-88e6-4d4e-bf68-2f73070baaf7}</Project>
       <Name>SOLA.Cache</Name>
     </ProjectReference>

@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.Infrastructure.MemoryC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.Infrastructure.PetaPoco", "Infrastructure\SOLA.Infrastructure.PetaPoco\SOLA.Infrastructure.PetaPoco.csproj", "{8A551A79-86D9-4288-BCFE-D9204CC381BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.Cache", "SOLA.Cache\SOLA.Cache.csproj", "{8F52AC9A-88E6-4D4E-BF68-2F73070BAAF7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.Cache", "Common\SOLA.Cache\SOLA.Cache.csproj", "{8F52AC9A-88E6-4D4E-BF68-2F73070BAAF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
