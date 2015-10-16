@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using SOLA.Common;
 using SOLA.DataAccess.Admin;
+using SOLA.DataAccess.Base;
 
 namespace SOLA.DataAccess
 {
@@ -8,12 +9,20 @@ namespace SOLA.DataAccess
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c => new AdminConfig { ConnectionString = WebConfig.AdminConnectionString })
+            builder.Register(c => new AdminConfig { ConnectionString = WebConfig.AdminConnectionString, ProviderName = "System.Data.SqlClient" })
                    .As<IAdminConfig>()
                    .InstancePerRequest();
 
             builder.RegisterType<CustomerConfig>()
                    .As<ICustomerConfig>()
+                   .InstancePerRequest();
+
+            builder.RegisterType<CustomerDatabase>()
+                   .AsSelf()
+                   .InstancePerRequest();
+
+            builder.RegisterType<AdminDatabase>()
+                   .AsSelf()
                    .InstancePerRequest();
 
             builder.RegisterType<AzureSqlServerDA>()

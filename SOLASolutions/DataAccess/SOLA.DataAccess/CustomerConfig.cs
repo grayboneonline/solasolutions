@@ -1,12 +1,8 @@
 ﻿using SOLA.Cache;
+using SOLA.DataAccess.Base;
 
 namespace SOLA.DataAccess
 {
-    public interface IConfig
-    {
-        string ConnectionString { get; set; }
-    }
-
     public interface ICustomerConfig : IConfig
     {
     }
@@ -21,8 +17,10 @@ namespace SOLA.DataAccess
 
             ConnectionString = string.Format(ConnectionStringTmpl, dataSource.ServerName, dataSource.SiteName,
                 dataSource.UserName, dataSource.Password);
+            ProviderName = "System.Data.SqlClient";
         }
 
         public string ConnectionString { get; set; }
+        public string ProviderName { get; set; }
     }
 }

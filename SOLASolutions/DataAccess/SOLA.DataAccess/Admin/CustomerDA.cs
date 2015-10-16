@@ -1,25 +1,17 @@
 ﻿using System.Collections.Generic;
+using SOLA.DataAccess.Base;
 using SOLA.Models.Admin;
 
 namespace SOLA.DataAccess.Admin
 {
-    public interface ICustomerDA
+    public interface ICustomerDA : IBaseDA<Customer>
     {
-        IEnumerable<Customer> GetAll();
         IEnumerable<CustomerDataSource> GetAllAzureSqlDataSources();
     }
 
-    public class CustomerDA : BaseDA, ICustomerDA
+    public class CustomerDA : BaseDA<Customer>, ICustomerDA
     {
-
-        public CustomerDA(IAdminConfig config) : base(config)
-        {
-        }
-
-        public IEnumerable<Customer> GetAll()
-        {
-            return Select<Customer>();
-        }
+        public CustomerDA(AdminDatabase database) : base(database) { }
 
         public IEnumerable<CustomerDataSource> GetAllAzureSqlDataSources()
         {

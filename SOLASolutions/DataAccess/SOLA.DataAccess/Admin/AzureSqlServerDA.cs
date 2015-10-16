@@ -1,23 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using SOLA.DataAccess.Base;
 using SOLA.Models.Admin;
 
 namespace SOLA.DataAccess.Admin
 {
-    public interface IAzureSqlServerDA
+    public interface IAzureSqlServerDA : IBaseDA<AzureSqlServer>
     {
-        IEnumerable<AzureSqlServer> GetAll();
     }
 
-    public class AzureSqlServerDA : BaseDA, IAzureSqlServerDA
+    public class AzureSqlServerDA : BaseDA<AzureSqlServer>, IAzureSqlServerDA
     {
-
-        public AzureSqlServerDA(IAdminConfig config) : base(config)
+        public AzureSqlServerDA(AdminDatabase database) : base(database)
         {
-        }
-
-        public IEnumerable<AzureSqlServer> GetAll()
-        {
-            return Select<AzureSqlServer>();
         }
     }
 }
