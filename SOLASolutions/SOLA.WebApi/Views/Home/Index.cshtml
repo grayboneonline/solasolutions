@@ -10,25 +10,23 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link rel="stylesheet" href="~/resources/css/angular-material/angular-material.min.css">
-    <link rel="stylesheet" href="~/resources/css/animate.min.css">
+    <link rel="stylesheet" href="@Request.ApplicationPath/resources/css/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="@Request.ApplicationPath/resources/css/animate.min.css">
 
-    <link rel="stylesheet" href="~/resources/css/site.css">
+    <link rel="stylesheet" href="@Request.ApplicationPath/resources/css/site.css">
 </head>
-<body class="sola-solutions-app">
+<body ng-app="SoLaSolutions" class="sola-solutions-app">
     <div ui-view="main" style="height: 100%;"></div>
 
     <script language="JavaScript" type="text/javascript">
-        var GLOBAL = {
-            scheme: '',
-            serverName: '$!request.serverName',
-            siteName: '$siteName',
+        var SOLA = {
+            scheme: '@Request.Url.Scheme',
+            serverName: '@Request.Url.Host',
+            siteName: 'test',
             authClient: '$authClient',
-            requestURL: '$!request.requestURL',
-            baseUrl: '$!request.contextPath',
-            baseUrlPublic: '/public',
-            baseUrlResources: '/resources',
-            baseUrlApi: '/api/v1',
+            originalUrl: '@Request.Url.OriginalString',
+            baseUrlResources: '@Request.ApplicationPath' + '/resources',
+            urlApi: '/api',
             stateUrlHome: '/app/home',
             stateUrlLogin: '/login',
             localStorageAuthName: 'token',
@@ -38,33 +36,33 @@
     </script>
 
     <!-- AngularJS -->
-    <script src="~/resources/js/angular/angular.min.js"></script>
-    <script src="~/resources/js/angular/angular-animate.min.js"></script>
-    <script src="~/resources/js/angular/angular-aria.min.js"></script>
-    <script src="~/resources/js/angular/angular-cookies.min.js"></script>
-    <script src="~/resources/js/angular/angular-loader.min.js"></script>
-    <script src="~/resources/js/angular/angular-message-format.min.js"></script>
-    <script src="~/resources/js/angular/angular-messages.min.js"></script>
-    <script src="~/resources/js/angular/angular-resource.min.js"></script>
-    <script src="~/resources/js/angular/angular-sanitize.min.js"></script>
-    <script src="~/resources/js/angular/angular-touch.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular/angular.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular/angular-animate.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular/angular-aria.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular/angular-cookies.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular/angular-loader.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular/angular-message-format.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular/angular-messages.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular/angular-resource.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular/angular-sanitize.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular/angular-touch.min.js"></script>
 
     <!-- Angular Material -->
-    <script src="~/resources/js/angular-material/angular-material.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular-material/angular-material.js"></script>
 
     <!-- Angular plugin -->
-    <script src="~/resources/js/angular-plugin/angular-ui-router.min.js"></script>
-    <script src="~/resources/js/angular-plugin/angular-translate.min.js"></script>
-    <script src="~/resources/js/angular-plugin/angular-translate-loader-url.min.js"></script>
-    <script src="~/resources/js/angular-plugin/angular-local-storage.min.js" type="text/javascript"></script>
-    <script src="~/resources/js/angular-plugin/angular-utf8-base64.min.js" type="text/javascript"></script>
-    <script src="~/resources/js/angular-plugin/http-auth-interceptor.js" type="text/javascript"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular-plugin/angular-ui-router.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular-plugin/angular-translate.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular-plugin/angular-translate-loader-url.min.js"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular-plugin/angular-local-storage.min.js" type="text/javascript"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular-plugin/angular-utf8-base64.min.js" type="text/javascript"></script>
+    <script src="@Request.ApplicationPath/resources/js/angular-plugin/http-auth-interceptor.js" type="text/javascript"></script>
 
-    <script src="~/resources/js/ocLazyLoad.min.js" type="text/javascript"></script>
-    <script src="~/resources/js/script.min.js" type="text/javascript"></script>
+    <script src="@Request.ApplicationPath/resources/js/ocLazyLoad.min.js" type="text/javascript"></script>
+    <script src="@Request.ApplicationPath/resources/js/script.min.js" type="text/javascript"></script>
 
     <!-- App -->
-    <script src="~/resources/app/app.js"></script>
-    <script src="~/resources/app/directives.js"></script>
+    <script src="@Request.ApplicationPath/resources/app/app.js"></script>
+    <script src="@Request.ApplicationPath/resources/app/directives.js"></script>
 </body>
 </html>
