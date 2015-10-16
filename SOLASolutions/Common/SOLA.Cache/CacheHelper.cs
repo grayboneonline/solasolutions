@@ -78,5 +78,11 @@ namespace SOLA.Cache
             get { return requestScopeCache.Get<CustomerDataSource>(RequestScopeCacheKey.CustomerDataSource); }
             set { requestScopeCache.Set(RequestScopeCacheKey.CustomerDataSource, value, true); }
         }
+
+        public string CustomerSite
+        {
+            get { return requestScopeCache.Get<string>(RequestScopeCacheKey.CustomerSite); }
+            set { requestScopeCache.Set(RequestScopeCacheKey.CustomerSite, value, true); }
+        }
     }
 }

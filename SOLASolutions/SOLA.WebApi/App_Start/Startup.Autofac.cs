@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Reflection;
+using System.Web.Mvc;
 using Autofac;
+using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using Owin;
 using SOLA.Business;
 using SOLA.Cache;
 using SOLA.Infrastructure.MemoryCache;
 using SOLA.Infrastructure.WebApi.Base;
+using SOLA.WebApi.Controllers;
 using SOLA.WebApi.Filters;
 
 namespace SOLA.WebApi
@@ -19,20 +22,36 @@ namespace SOLA.WebApi
         {
             var builder = new ContainerBuilder();
 
-            //register types, modules ...
+            // Api filters
+            builder.RegisterWebApiFilterProvider(HttpConfig);
             builder.RegisterType<HandleRequestFilter>()
                 .AsWebApiActionFilterFor<BaseApiController>()
                 .InstancePerRequest();
 
+            // Mvc filters
+            builder.RegisterFilterProvider();
+            builder.RegisterType<HandleRequestFilterAttribute>()
+                .AsActionFilterFor<HomeController>()
+                .InstancePerRequest();
+
+            // Modules
             builder.RegisterModule<MemoryCacheModule>();
             builder.RegisterModule<CacheModule>();
             builder.RegisterModule<BusinessModule>();
 
+            // Api controllers
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterWebApiFilterProvider(HttpConfig);
+
+            // Mvc controllers
+            builder.RegisterControllers(Assembly.GetExecutingAssembly());
+
+            // Mvc view property injection
+            builder.RegisterSource(new ViewRegistrationSource());
 
             Container = builder.Build();
+
             HttpConfig.DependencyResolver = new AutofacWebApiDependencyResolver(Container);
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(Container));
 
             app.UseAutofacMiddleware(Container);
             app.UseAutofacWebApi(HttpConfig);
