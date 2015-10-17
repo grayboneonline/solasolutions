@@ -13,7 +13,7 @@
         .config(configLocalStorage)
   		.config(configLeftMenu)
 		//.config(configCORS)
-		.config(configHttpInterceptor)
+		//.config(configHttpInterceptor)
   		.run(runApp)
     ;
 
@@ -102,6 +102,7 @@
                     // intercept and change config: e.g. change the URL
                     // config.url += '?nocache=' + (new Date()).getTime();
                     // broadcasting 'httpRequest' event
+                    
                     if (isUrlApi(config.url)) {
                         var AUTH_USER = SOLA.localStorageAuthName;
                         var token = angular.fromJson(localStorageService.get(AUTH_USER));
