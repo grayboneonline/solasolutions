@@ -166,7 +166,7 @@
     <Content Include="resources\app\main\main.controller.js" />
     <Content Include="resources\app\main\main.html" />
     <Content Include="resources\css\angular-material\angular-material.min.css" />
-    <Content Include="resources\css\animate.min.css" />
+    <Content Include="resources\css\animate\animate.min.css" />
     <Content Include="resources\css\site.css" />
     <Content Include="resources\js\angular-material\angular-material.js" />
     <Content Include="resources\js\angular-plugin\angular-local-storage.min.js" />

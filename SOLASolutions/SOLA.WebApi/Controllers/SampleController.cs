@@ -5,6 +5,8 @@ using SOLA.Infrastructure.WebApi.Base;
 
 namespace SOLA.WebApi.Controllers
 {
+    [SOLAAuthorize]
+    [RoutePrefix("api/sample")]
     public class SampleController : BaseApiController
     {
         private readonly ICacheHelper cacheHelper;

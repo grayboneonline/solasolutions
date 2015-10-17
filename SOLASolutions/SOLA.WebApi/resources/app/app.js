@@ -7,12 +7,14 @@
 								    'ngAnimate',
 								    'ngTouch',
   	                                'ab-base64',
+                                    'oc.lazyLoad',
   	                                'LocalStorageModule',
-  	                                'http-auth-interceptor'])
+  	                                'http-auth-interceptor',
+                                    'sola-directive'])
         //.config(configTranslateMessage)
         .config(configLocalStorage)
   		.config(configLeftMenu)
-		//.config(configCORS)
+		.config(configCORS)
 		//.config(configHttpInterceptor)
   		.run(runApp)
     ;
@@ -51,6 +53,17 @@
 			        'main': {
 			            templateUrl: getResourceContentPath("/app/login/login.html")
 			        }
+			    },
+			    resolve: {
+			        loadMyService: ['$ocLazyLoad', function ($ocLazyLoad) {
+			            return $ocLazyLoad.load(
+                            {
+                                name: 'controller',
+                                files: ['resources/app/login/login.controller.js']
+                            }
+                        );
+
+			        }]
 			    }
 			})
 			.state('app', {
@@ -84,9 +97,10 @@
     function configCORS($sceDelegateProvider, $ocLazyLoadProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
 			// Allow same origin resource loads.
-			'self',
+			'self'
+            //,
 			// Allow loading from outer templates domain.
-			SOLA.cdnEndpoint + '/**'
+			//SOLA.cdnEndpoint + '/**'
         ]);
 
         $ocLazyLoadProvider.config({
@@ -100,7 +114,6 @@
             return {
                 'request': function (config) {
                     // intercept and change config: e.g. change the URL
-                    // config.url += '?nocache=' + (new Date()).getTime();
                     // broadcasting 'httpRequest' event
                     
                     if (isUrlApi(config.url)) {

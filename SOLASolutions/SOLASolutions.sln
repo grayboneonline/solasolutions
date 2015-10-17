@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.WebApi", "SOLA.WebApi\SOLA.WebApi.csproj", "{E75E4FA3-9FA8-485F-A0EC-DBFA9652A6FA}"
 EndProject
@@ -98,6 +98,9 @@ Global
 		{882B6EC0-0E79-466A-8460-EAE34CA97E48} = {D685E163-D299-4E69-96EE-DB2A5C4E2D60}
 		{8F52AC9A-88E6-4D4E-BF68-2F73070BAAF7} = {49E0425F-E76F-4014-8D72-F7890D250B5F}
 		{8A551A79-86D9-4288-BCFE-D9204CC381BF} = {D685E163-D299-4E69-96EE-DB2A5C4E2D60}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

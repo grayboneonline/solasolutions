@@ -1,4 +1,37 @@
-﻿<div>asdsd
-    
-    asdasd
-    asd</div>
+﻿<div layout="column" style="height: 100%">
+    <md-toolbar layout="row" class="md-primary">
+    </md-toolbar>
+    <div style="position: absolute; width: 100%; z-index: 59">
+        <md-progress-linear class="md-accent" sola-loading md-mode="indeterminate"></md-progress-linear>
+    </div>
+    <md-content ng-controller="LoginController as self" layout="column" layout-align="start center" flex>
+        <form name="loginForm" ng-submit="self.login()" style="min-width: 300px; flex-shrink: 0" class="md-padding" layout="column" layout-align="center center">
+            <img style="border-radius: 50%; width: 120px;" ng-src="resources/images/icons/avatars/avatar-01.svg" alt="avater" />
+            <md-input-container md-no-float>
+                <md-icon class="material-icons" aria-label="person">person</md-icon>
+                <input ng-blur="visitedEmail = true" placeholder="Email" ng-focus="visitedEmail = false" name="email" ng-model="self.username" type="email" required ng-readonly="!self.btnSignIn" autofocus>
+                <div ng-messages="loginForm.email.$error" style="margin-left: 36px">
+                    <div ng-message="required" ng-show="loginForm.email.$error.required && visitedEmail">Email is required.</div>
+                    <div ng-message="required" ng-show="loginForm.email.$error.email && visitedEmail">Email is invalid.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container md-no-float>
+                <md-icon class="material-icons" aria-label="vpn_key">vpn_key</md-icon>
+                <input ng-blur="visitedPass = true" placeholder="Password" ng-focus="visitedPass = false" name="password" ng-model="self.password" type="password" required ng-readonly="!self.btnSignIn">
+                <div ng-messages="loginForm.password.$error" style="margin-left: 36px">
+                    <div ng-message="required" ng-show="loginForm.password.$error.required && visitedPass">Password is required.</div>
+                </div>
+            </md-input-container>
+
+            <md-button class="md-raised md-primary" type="submit" ng-disabled="!self.btnSignIn">
+                Login
+            </md-button>
+
+            <div layout="row" layout-align="end end" flex class="width-100-percent"
+                 style="position: relative; flex-direction: column; padding: 2px; flex-shrink: 0">
+                <a ng-href="#" tabindex="-1">Forgot password?</a>
+            </div>
+        </form>
+    </md-content>
+</div>
