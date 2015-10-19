@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SOLA.Models.Admin;
+using SOLA.Cache.Contracts;
 
 namespace SOLA.Cache.CacheObjects
 {
-    public class ApplicationClientCache : Dictionary<string, ApplicationClient>
+    public class ApplicationClientCache : Dictionary<string, IApplicationClient>
     {
-        public void AddRange(IEnumerable<ApplicationClient> clients)
+        public void AddRange(IEnumerable<IApplicationClient> clients)
         {
             foreach (var client in clients)
                 Add(client.ClientId, client);

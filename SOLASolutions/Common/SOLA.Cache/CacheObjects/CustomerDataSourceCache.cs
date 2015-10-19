@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using SOLA.Models.Admin;
+using SOLA.Cache.Contracts;
 
 namespace SOLA.Cache.CacheObjects
 {
-    public class CustomerDataSourceCache : Dictionary<string, CustomerDataSource>
+    public class CustomerDataSourceCache : Dictionary<string, ICustomerDataSource>
     {
-        public void AddRange(IEnumerable<CustomerDataSource> customers)
+        public void AddRange(IEnumerable<ICustomerDataSource> customers)
         {
             foreach (var customer in customers)
                 Add(customer.SiteName, customer);

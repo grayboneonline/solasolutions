@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SOLA.Models")]
+[assembly: AssemblyTitle("SOLA.Business.Models")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("SOLA.Models")]
+[assembly: AssemblyProduct("SOLA.Business.Models")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0f32683f-b548-4ce2-a43b-f198fec8c2c2")]
+[assembly: Guid("51020653-a7b5-4c05-bf1d-0275bb445a86")]
 
 // Version information for an assembly consists of the following four values:
 //

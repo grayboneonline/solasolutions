@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A596DE9E-23E1-4DFA-97AE-9592E2E1A89C}</ProjectGuid>
+    <ProjectGuid>{1F65C7D0-777B-4607-9D8D-6422CF48896B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SOLA.Common</RootNamespace>
-    <AssemblyName>SOLA.Common</AssemblyName>
+    <RootNamespace>SOLA.DataAccess.Models</RootNamespace>
+    <AssemblyName>SOLA.DataAccess.Models</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -32,14 +32,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\ConfigAttribute.cs" />
-    <Compile Include="Constants\ApiRoute.cs" />
+    <Compile Include="Admin\ApplicationClient.cs" />
+    <Compile Include="Admin\AzureSqlServer.cs" />
+    <Compile Include="Admin\Customer.cs" />
+    <Compile Include="Page.cs" />
+    <Compile Include="Permission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebConfig.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="User.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\SOLA.Infrastructure.PetaPoco\SOLA.Infrastructure.PetaPoco.csproj">
+      <Project>{8a551a79-86d9-4288-bcfe-d9204cc381bf}</Project>
+      <Name>SOLA.Infrastructure.PetaPoco</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

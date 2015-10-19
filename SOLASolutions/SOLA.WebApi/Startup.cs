@@ -3,7 +3,6 @@ using Owin;
 using System.Web.Http;
 using SOLA.Business.Admin;
 using SOLA.Cache;
-using SOLA.WebApi.TemporaryDatasource;
 
 namespace SOLA.WebApi
 {
@@ -13,6 +12,9 @@ namespace SOLA.WebApi
 
         public void Configuration(IAppBuilder app)
         {
+            WebApiMapper.Register();
+            Business.BusinessMapper.Register();
+
             HttpConfig = new HttpConfiguration();
 
             ConfigureMvc();
@@ -35,7 +37,7 @@ namespace SOLA.WebApi
                 var adminManagement = requestScope.Resolve<IAdminManagement>();
 
                 cacheHelper.LifeTimeScope.Initialize();
-                cacheHelper.LifeTimeScope.ApplicationClients.AddRange(ApplicationClientDatasource.Data);
+                cacheHelper.LifeTimeScope.ApplicationClients.AddRange(adminManagement.GetAllApplicationClient());
                 cacheHelper.LifeTimeScope.CustomerDataSources.AddRange(adminManagement.GetAllAzureSqlDataSources());
             });
         }

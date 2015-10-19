@@ -1,7 +1,7 @@
 ﻿using System;
 using PetaPoco;
 
-namespace SOLA.Models
+namespace SOLA.DataAccess.Models
 {
     [TableName("Roles")]
     [PrimaryKey("RoleId")]

@@ -1,5 +1,5 @@
 ﻿using SOLA.DataAccess.Base;
-using SOLA.Models.Admin;
+using SOLA.DataAccess.Models.Admin;
 
 namespace SOLA.DataAccess.Admin
 {

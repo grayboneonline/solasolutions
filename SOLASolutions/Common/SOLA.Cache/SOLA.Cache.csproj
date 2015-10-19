@@ -46,20 +46,15 @@
     <Compile Include="CacheObjects\ApplicationClientCache.cs" />
     <Compile Include="CacheObjects\CustomerDataSourceCache.cs" />
     <Compile Include="CacheObjects\RefreshTokenCache.cs" />
+    <Compile Include="Contracts\IRefreshToken.cs" />
+    <Compile Include="Contracts\ICustomerDataSource.cs" />
+    <Compile Include="Contracts\IApplicationClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SOLA.Models\SOLA.Models.csproj">
-      <Project>{94a91b7c-9cbb-4359-976b-d3fac3dba0e3}</Project>
-      <Name>SOLA.Models</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\SOLA.Infrastructure.MemoryCache\SOLA.Infrastructure.MemoryCache.csproj">
       <Project>{882b6ec0-0e79-466a-8460-eae34ca97e48}</Project>
       <Name>SOLA.Infrastructure.MemoryCache</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Infrastructure\SOLA.Infrastructure.OAuth\SOLA.Infrastructure.OAuth.csproj">
-      <Project>{50C3C387-BB5C-4DAB-A09C-A2DDAA5EDB70}</Project>
-      <Name>SOLA.Infrastructure.OAuth</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

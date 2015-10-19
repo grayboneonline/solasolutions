@@ -1,7 +1,7 @@
 ﻿using System;
 using PetaPoco;
 
-namespace SOLA.Models.Admin
+namespace SOLA.DataAccess.Models.Admin
 {
     [TableName("AzureSQLServers")]
     [PrimaryKey("AzureSQLServerId")]

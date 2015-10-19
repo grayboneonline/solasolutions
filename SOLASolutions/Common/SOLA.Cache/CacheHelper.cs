@@ -1,7 +1,7 @@
 ﻿using SOLA.Cache.CacheObjects;
+using SOLA.Cache.Contracts;
 using SOLA.Infrastructure.MemoryCache.LifeTimeScope;
 using SOLA.Infrastructure.MemoryCache.RequestScope;
-using SOLA.Models.Admin;
 
 namespace SOLA.Cache
 {
@@ -73,9 +73,9 @@ namespace SOLA.Cache
             this.requestScopeCache = requestScopeCache;
         }
 
-        public CustomerDataSource CustomerDataSource
+        public ICustomerDataSource CustomerDataSource
         {
-            get { return requestScopeCache.Get<CustomerDataSource>(RequestScopeCacheKey.CustomerDataSource); }
+            get { return requestScopeCache.Get<ICustomerDataSource>(RequestScopeCacheKey.CustomerDataSource); }
             set { requestScopeCache.Set(RequestScopeCacheKey.CustomerDataSource, value, true); }
         }
 

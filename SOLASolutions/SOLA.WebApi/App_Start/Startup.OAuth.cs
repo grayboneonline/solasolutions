@@ -40,7 +40,7 @@ namespace SOLA.WebApi
         private readonly Func<RefreshToken, bool> addRefreshTokenFunc = refreshToken => Container.RunInRequestScope(requestScope =>
             {
                 var cacheHelper = requestScope.Resolve<ICacheHelper>();
-                cacheHelper.LifeTimeScope.RefreshTokens.Add(refreshToken);
+                cacheHelper.LifeTimeScope.RefreshTokens.Add(refreshToken.MapTo<Models.OAuth.RefreshToken>());
 
                 return true;
             });

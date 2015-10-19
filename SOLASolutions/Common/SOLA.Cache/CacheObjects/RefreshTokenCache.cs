@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using SOLA.Infrastructure.OAuth.Contracts;
+using SOLA.Cache.Contracts;
 
 namespace SOLA.Cache.CacheObjects
 {
-    public class RefreshTokenCache : Dictionary<string, RefreshToken>
+    public class RefreshTokenCache : Dictionary<string, IRefreshToken>
     {
-        public void Add(RefreshToken refreshToken)
+        public void Add(IRefreshToken refreshToken)
         {
             Add(refreshToken.Token, refreshToken);
         }

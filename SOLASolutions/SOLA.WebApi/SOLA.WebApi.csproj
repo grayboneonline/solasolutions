@@ -14,7 +14,7 @@
     <RootNamespace>SOLA.WebApi</RootNamespace>
     <AssemblyName>SOLA.WebApi</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -59,6 +59,10 @@
     </Reference>
     <Reference Include="Autofac.Integration.WebApi.Owin">
       <HintPath>..\packages\Autofac.WebApi2.Owin.3.3.0\lib\net45\Autofac.Integration.WebApi.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=4.0.4.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin">
@@ -197,6 +201,7 @@
     <Compile Include="App_Start\Startup.OAuth.cs" />
     <Compile Include="App_Start\Startup.Api.cs" />
     <Compile Include="App_Start\Startup.Mvc.cs" />
+    <Compile Include="WebApiMapper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
     <Compile Include="Filters\HandleRequestFilter.cs" />
@@ -205,7 +210,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="TemporaryDatasource\ApiClientDatasource.cs" />
     <Compile Include="Views\BaseView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -233,10 +237,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="resources\app\services.shared\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Business\SOLA.Business.Models\SOLA.Business.Models.csproj">
+      <Project>{e6e94e4e-c43a-4d80-8580-860911042e01}</Project>
+      <Name>SOLA.Business.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Business\SOLA.Business\SOLA.Business.csproj">
       <Project>{bb40d3ff-6384-4bf8-b314-5d189ddc3434}</Project>
       <Name>SOLA.Business</Name>
@@ -257,13 +264,13 @@
       <Project>{59EF3B8C-251C-4B6C-8D11-8E898A2594BC}</Project>
       <Name>SOLA.Infrastructure.WebApi</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\SOLA.Models\SOLA.Models.csproj">
-      <Project>{94a91b7c-9cbb-4359-976b-d3fac3dba0e3}</Project>
-      <Name>SOLA.Models</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\SOLA.Infrastructure.MemoryCache\SOLA.Infrastructure.MemoryCache.csproj">
       <Project>{882b6ec0-0e79-466a-8460-eae34ca97e48}</Project>
       <Name>SOLA.Infrastructure.MemoryCache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Presentation\SOLA.WebApi.Models\SOLA.WebApi.Models.csproj">
+      <Project>{d37b4de1-4af6-4c8d-99e9-59e647d24da5}</Project>
+      <Name>SOLA.WebApi.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

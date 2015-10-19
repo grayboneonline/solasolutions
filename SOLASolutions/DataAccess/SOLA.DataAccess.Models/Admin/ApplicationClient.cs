@@ -1,4 +1,4 @@
-﻿namespace SOLA.Models.Admin
+﻿namespace SOLA.DataAccess.Models.Admin
 {
     public class ApplicationClient
     {

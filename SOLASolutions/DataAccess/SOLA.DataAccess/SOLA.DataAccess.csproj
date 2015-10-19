@@ -66,13 +66,13 @@
       <Project>{A596DE9E-23E1-4DFA-97AE-9592E2E1A89C}</Project>
       <Name>SOLA.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\SOLA.Models\SOLA.Models.csproj">
-      <Project>{94a91b7c-9cbb-4359-976b-d3fac3dba0e3}</Project>
-      <Name>SOLA.Models</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\SOLA.Infrastructure.PetaPoco\SOLA.Infrastructure.PetaPoco.csproj">
       <Project>{8a551a79-86d9-4288-bcfe-d9204cc381bf}</Project>
       <Name>SOLA.Infrastructure.PetaPoco</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SOLA.DataAccess.Models\SOLA.DataAccess.Models.csproj">
+      <Project>{1f65c7d0-777b-4607-9d8d-6422cf48896b}</Project>
+      <Name>SOLA.DataAccess.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

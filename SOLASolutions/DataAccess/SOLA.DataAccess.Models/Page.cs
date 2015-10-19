@@ -1,6 +1,6 @@
 ﻿using PetaPoco;
 
-namespace SOLA.Models
+namespace SOLA.DataAccess.Models
 {
     [TableName("Pages")]
     [PrimaryKey("PageId")]
