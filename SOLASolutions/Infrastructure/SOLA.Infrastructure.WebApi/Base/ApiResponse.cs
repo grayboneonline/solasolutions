@@ -2,15 +2,15 @@
 {
     public class ApiResponse
     {
-        public bool Success { get; set; }
+        public ResponseType ResponseType { get; set; }
         
         public string Message { get; set; }
 
         public ApiResponse() { }
 
-        public ApiResponse(bool success, string message = "")
+        public ApiResponse(ResponseType responseType, string message = "")
         {
-            Success = success;
+            ResponseType = responseType;
             Message = message;
         }
     }
@@ -21,10 +21,17 @@
 
         public ApiResponse() { }
 
-        public ApiResponse(bool success, T data, string message = "")
-            : base(success, message)
+        public ApiResponse(ResponseType responseType, T data, string message = "")
+            : base(responseType, message)
         {
             Data = data;
         }
+    }
+
+    public enum ResponseType
+    {
+        Error = 0,
+        Success = 1,
+        Warning = 2,
     }
 }

@@ -10,34 +10,20 @@ namespace SOLA.Infrastructure.WebApi.Base
     {
         public HttpRequestMessage Request { get; set; }
         public HttpStatusCode StatusCode { get; set; }
+        public ResponseType ResponseType { get; set; }
         public string Message { get; set; }
 
-        public bool Success
-        {
-            get
-            {
-                switch (StatusCode)
-                {
-                    case HttpStatusCode.OK:
-                    case HttpStatusCode.Created:
-                        return true;
-
-                    default:
-                        return false;
-                }
-            }
-        }
-
-        public ApiResult(HttpRequestMessage request, HttpStatusCode statusCode = HttpStatusCode.OK, string message = "")
+        public ApiResult(HttpRequestMessage request, HttpStatusCode statusCode = HttpStatusCode.OK, ResponseType responseType = ResponseType.Success, string message = "")
         {
             Request = request;
+            ResponseType = responseType;
             StatusCode = statusCode;
             Message = message;
         }
 
         public virtual Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return Task.FromResult(Request.CreateResponse(StatusCode, new ApiResponse(Success, Message)));
+            return Task.FromResult(Request.CreateResponse(StatusCode, new ApiResponse(ResponseType, Message)));
         }
     }
 
@@ -45,15 +31,15 @@ namespace SOLA.Infrastructure.WebApi.Base
     {
         public T Data { get; set; }
 
-        public ApiResult(HttpRequestMessage request, HttpStatusCode statusCode, T data, string message = "")
-            : base (request, statusCode, message)
+        public ApiResult(HttpRequestMessage request, HttpStatusCode statusCode, T data, ResponseType responseType = ResponseType.Success, string message = "")
+            : base(request, statusCode, responseType, message)
         {
             Data = data;
         }
 
         public override Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return Task.FromResult(Request.CreateResponse(StatusCode, new ApiResponse<T>(Success, Data, Message)));
+            return Task.FromResult(Request.CreateResponse(StatusCode, new ApiResponse<T>(ResponseType, Data, Message)));
         }
     }
 }
