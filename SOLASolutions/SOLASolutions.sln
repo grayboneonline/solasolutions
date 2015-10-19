@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.WebApi", "SOLA.WebApi\SOLA.WebApi.csproj", "{E75E4FA3-9FA8-485F-A0EC-DBFA9652A6FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOLA.WebApi", "Presentation\SOLA.WebApi\SOLA.WebApi.csproj", "{E75E4FA3-9FA8-485F-A0EC-DBFA9652A6FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{D685E163-D299-4E69-96EE-DB2A5C4E2D60}"
 EndProject
