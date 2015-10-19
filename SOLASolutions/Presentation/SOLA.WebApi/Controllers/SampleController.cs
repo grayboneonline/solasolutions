@@ -1,11 +1,9 @@
 ﻿using System.Web.Http;
 using SOLA.Cache;
-using SOLA.Infrastructure.WebApi.Attributes;
 using SOLA.Infrastructure.WebApi.Base;
 
 namespace SOLA.WebApi.Controllers
 {
-    [SOLAAuthorize]
     [RoutePrefix("api/sample")]
     public class SampleController : BaseApiController
     {
@@ -15,6 +13,7 @@ namespace SOLA.WebApi.Controllers
             this.cacheHelper = cacheHelper;
         }
 
+        [AllowAnonymous]
         public IHttpActionResult Get()
         {
             

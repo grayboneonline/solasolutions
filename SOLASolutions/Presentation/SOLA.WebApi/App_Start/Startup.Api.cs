@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using SOLA.Infrastructure.WebApi.Attributes;
 
 namespace SOLA.WebApi
 {
@@ -7,6 +8,7 @@ namespace SOLA.WebApi
         public static void ConfigureWebApi()
         {
             // Web API configuration and services
+            HttpConfig.Filters.Add(new SOLAAuthorize());
 
             // Web API routes
             HttpConfig.MapHttpAttributeRoutes();
