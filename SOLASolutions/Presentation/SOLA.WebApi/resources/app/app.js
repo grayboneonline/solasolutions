@@ -223,7 +223,8 @@
         });
 
         $rootScope.$on('event:auth-loginConfirmed', function () {
-            $location.path(SOLA.stateUrlHome);
+            if ($state.current.name == 'login')
+                $location.path(SOLA.stateUrlHome);
         });
 
         $rootScope.$on('event:auth-loginCancelled', function () {
