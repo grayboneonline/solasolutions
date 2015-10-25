@@ -33,12 +33,12 @@ namespace SOLA.WebApi
         {
             Container.RunInRequestScope(requestScope =>
             {
-                var cacheHelper = requestScope.Resolve<ICacheHelper>();
+                var lifeTimeScopeCache = requestScope.Resolve<ILifeTimeScopeCache>();
                 var adminManagement = requestScope.Resolve<IAdminManagement>();
 
-                cacheHelper.LifeTimeScope.Initialize();
-                cacheHelper.LifeTimeScope.ApplicationClients.AddRange(adminManagement.GetAllApplicationClient());
-                cacheHelper.LifeTimeScope.CustomerDataSources.AddRange(adminManagement.GetAllAzureSqlDataSources());
+                lifeTimeScopeCache.Initialize();
+                lifeTimeScopeCache.ApplicationClients.AddRange(adminManagement.GetAllApplicationClient());
+                lifeTimeScopeCache.CustomerDataSources.AddRange(adminManagement.GetAllAzureSqlDataSources());
             });
         }
     }

@@ -14,7 +14,7 @@
     <RootNamespace>SOLA.WebApi</RootNamespace>
     <AssemblyName>SOLA.WebApi</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -263,10 +263,6 @@
     <ProjectReference Include="..\..\Infrastructure\SOLA.Infrastructure.WebApi\SOLA.Infrastructure.WebApi.csproj">
       <Project>{59EF3B8C-251C-4B6C-8D11-8E898A2594BC}</Project>
       <Name>SOLA.Infrastructure.WebApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Infrastructure\SOLA.Infrastructure.MemoryCache\SOLA.Infrastructure.MemoryCache.csproj">
-      <Project>{882b6ec0-0e79-466a-8460-eae34ca97e48}</Project>
-      <Name>SOLA.Infrastructure.MemoryCache</Name>
     </ProjectReference>
     <ProjectReference Include="..\SOLA.WebApi.Models\SOLA.WebApi.Models.csproj">
       <Project>{d37b4de1-4af6-4c8d-99e9-59e647d24da5}</Project>

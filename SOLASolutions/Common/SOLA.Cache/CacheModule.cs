@@ -6,7 +6,9 @@ namespace SOLA.Cache
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CacheHelper>().As<ICacheHelper>().InstancePerRequest();
+            builder.RegisterType<RequestScopeCache>().As<IRequestScopeCache>().InstancePerRequest();
+
+            builder.RegisterType<LifeTimeScopeCache>().As<ILifeTimeScopeCache>().SingleInstance();
         }
     }
 }

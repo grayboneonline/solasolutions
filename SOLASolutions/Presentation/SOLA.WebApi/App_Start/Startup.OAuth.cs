@@ -18,50 +18,43 @@ namespace SOLA.WebApi
     {
         #region Function & Action
 
-        private readonly Func<string, ClientInfo> getClientFunc =
-            clientId => Container.RunInRequestScope(requestScope =>
+        private readonly Func<string, ClientInfo> getClientFunc = clientId =>
+        {
+            var lifeTimeScopeCache = Container.Resolve<ILifeTimeScopeCache>();
+            if (!lifeTimeScopeCache.ApplicationClients.ContainsKey(clientId))
+                return null;
+
+            var client = lifeTimeScopeCache.ApplicationClients[clientId];
+
+            return new ClientInfo
             {
-                var cacheHelper = requestScope.Resolve<ICacheHelper>();
-                if (!cacheHelper.LifeTimeScope.ApplicationClients.ContainsKey(clientId))
-                    return null;
-
-                var client = cacheHelper.LifeTimeScope.ApplicationClients[clientId];
-
-                return new ClientInfo
-                {
-                    AllowedOrigin = client.AllowedOrigin,
-                    IsActive = client.IsActive,
-                    RefreshTokenLifeTime = client.RefreshTokenLifeTime
-                };
-            });
+                AllowedOrigin = client.AllowedOrigin,
+                IsActive = client.IsActive,
+                RefreshTokenLifeTime = client.RefreshTokenLifeTime
+            };
+        };
 
         private readonly Func<string, string, bool> validateUserNameAndPasswordFunc = (username, password) => username == password;
 
-        private readonly Func<RefreshToken, bool> addRefreshTokenFunc = refreshToken => Container.RunInRequestScope(requestScope =>
-            {
-                var cacheHelper = requestScope.Resolve<ICacheHelper>();
-                cacheHelper.LifeTimeScope.RefreshTokens.Add(refreshToken.MapTo<Models.OAuth.RefreshToken>());
-
-                return true;
-            });
-
-        private readonly Func<string, string> getRefreshTokenProtectedTicketFunc = hashedToken => Container.RunInRequestScope(requestScope =>
+        private readonly Func<RefreshToken, bool> addRefreshTokenFunc = refreshToken =>
         {
-            var cacheHelper = requestScope.Resolve<ICacheHelper>();
-            return cacheHelper.LifeTimeScope.RefreshTokens.ContainsKey(hashedToken) ? cacheHelper.LifeTimeScope.RefreshTokens[hashedToken].ProtectedTicket : null;
-        });
+            Container.Resolve<ILifeTimeScopeCache>().RefreshTokens.Add(refreshToken.MapTo<Models.OAuth.RefreshToken>());
+            return true;
+        };
 
-        private readonly Action<string> removeRefreshTokenAction = hashedToken => Container.RunInRequestScope(
-            requestScope =>
-            {
-                requestScope.Resolve<ICacheHelper>().LifeTimeScope.RefreshTokens.Remove(hashedToken);
-            });
+        private readonly Func<string, string> getRefreshTokenProtectedTicketFunc = hashedToken =>
+        {
+            var lifeTimeScopeCache = Container.Resolve<ILifeTimeScopeCache>();
+            return lifeTimeScopeCache.RefreshTokens.ContainsKey(hashedToken) ? lifeTimeScopeCache.RefreshTokens[hashedToken].ProtectedTicket : null;
+        };
+
+        private readonly Action<string> removeRefreshTokenAction = hashedToken => Container.Resolve<ILifeTimeScopeCache>().RefreshTokens.Remove(hashedToken);
 
         #endregion
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            var allowClients = Container.RunInRequestScope(requestScope => requestScope.Resolve<ICacheHelper>().LifeTimeScope.ApplicationClients.GetAllClientId());
+            var allowClients = Container.Resolve<ILifeTimeScopeCache>().ApplicationClients.GetAllClientId();
 
             app.UseOAuthAuthorizationServer(
                 new OAuthAuthorizationServerOptions

@@ -7,17 +7,16 @@ namespace SOLA.WebApi.Controllers
     [RoutePrefix("api/sample")]
     public class SampleController : BaseApiController
     {
-        private readonly ICacheHelper cacheHelper;
-        public SampleController(ICacheHelper cacheHelper)
+        private readonly ILifeTimeScopeCache lifeTimeScopeCache;
+        public SampleController(ILifeTimeScopeCache lifeTimeScopeCache)
         {
-            this.cacheHelper = cacheHelper;
+            this.lifeTimeScopeCache = lifeTimeScopeCache;
         }
 
         [AllowAnonymous]
         public IHttpActionResult Get()
         {
-            
-            return Ok(cacheHelper.LifeTimeScope.CustomerDataSources.Values);
+            return Ok(lifeTimeScopeCache.CustomerDataSources.Values);
         }
     }
 }

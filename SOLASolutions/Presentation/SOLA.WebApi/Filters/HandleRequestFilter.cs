@@ -8,17 +8,20 @@ namespace SOLA.WebApi.Filters
 {
     public class HandleRequestFilter : IAutofacActionFilter
     {
-        private readonly ICacheHelper cacheHelper;
-        public HandleRequestFilter (ICacheHelper cacheHelper)
+        private readonly IRequestScopeCache requestScopeCache;
+        private readonly ILifeTimeScopeCache lifeTimeScopeCache;
+        public HandleRequestFilter(IRequestScopeCache requestScopeCache, ILifeTimeScopeCache lifeTimeScopeCache)
         {
-            this.cacheHelper = cacheHelper;
+            this.requestScopeCache = requestScopeCache;
+            this.lifeTimeScopeCache = lifeTimeScopeCache;
         }
 
         public void OnActionExecuting(HttpActionContext actionContext)
         {
             var customer = actionContext.Request.RequestUri.Host.Split('.')[0];
 
-            cacheHelper.RequestScope.CustomerDataSource = cacheHelper.LifeTimeScope.CustomerDataSources[customer];
+            requestScopeCache.CustomerSite = customer;
+            requestScopeCache.CustomerDataSource = lifeTimeScopeCache.CustomerDataSources[customer];
         }
 
         public void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
@@ -28,18 +31,19 @@ namespace SOLA.WebApi.Filters
 
     public class HandleRequestFilterAttribute : System.Web.Mvc.ActionFilterAttribute
     {
-        private readonly ICacheHelper cacheHelper;
-
-        public HandleRequestFilterAttribute(ICacheHelper cacheHelper)
+        private readonly IRequestScopeCache requestScopeCache;
+        private readonly ILifeTimeScopeCache lifeTimeScopeCache;
+        public HandleRequestFilterAttribute(IRequestScopeCache requestScopeCache, ILifeTimeScopeCache lifeTimeScopeCache)
         {
-            this.cacheHelper = cacheHelper;
+            this.requestScopeCache = requestScopeCache;
+            this.lifeTimeScopeCache = lifeTimeScopeCache;
         }
 
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
             var customer = actionContext.HttpContext.Request.Url.Host.Split('.')[0];
 
-            cacheHelper.RequestScope.CustomerSite = customer;
+            requestScopeCache.CustomerSite = customer;
 
             base.OnActionExecuting(actionContext);
         }

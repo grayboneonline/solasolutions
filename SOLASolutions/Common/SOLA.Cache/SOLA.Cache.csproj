@@ -41,7 +41,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CacheHelper.cs" />
+    <Compile Include="Base\MemoryCache.cs" />
     <Compile Include="CacheModule.cs" />
     <Compile Include="CacheObjects\ApplicationClientCache.cs" />
     <Compile Include="CacheObjects\CustomerDataSourceCache.cs" />
@@ -49,13 +49,9 @@
     <Compile Include="Contracts\IRefreshToken.cs" />
     <Compile Include="Contracts\ICustomerDataSource.cs" />
     <Compile Include="Contracts\IApplicationClient.cs" />
+    <Compile Include="LifeTimeScopeCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Infrastructure\SOLA.Infrastructure.MemoryCache\SOLA.Infrastructure.MemoryCache.csproj">
-      <Project>{882b6ec0-0e79-466a-8460-eae34ca97e48}</Project>
-      <Name>SOLA.Infrastructure.MemoryCache</Name>
-    </ProjectReference>
+    <Compile Include="RequestScopeCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

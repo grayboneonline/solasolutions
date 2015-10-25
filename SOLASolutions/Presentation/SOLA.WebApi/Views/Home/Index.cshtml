@@ -22,7 +22,7 @@
         var SOLA = {
             scheme: '@Request.Url.Scheme',
             serverName: '@Request.Url.Host',
-            siteName: '@CacheHelper.RequestScope.CustomerSite',
+            siteName: '@RequestScopeCache.CustomerSite',
             authClient: '$authClient',
             originalUrl: '@Request.Url.OriginalString',
             baseUrlResources: '@Request.ApplicationPath' + '/resources',

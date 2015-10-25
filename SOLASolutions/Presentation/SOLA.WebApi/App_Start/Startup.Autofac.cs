@@ -7,7 +7,6 @@ using Autofac.Integration.WebApi;
 using Owin;
 using SOLA.Business;
 using SOLA.Cache;
-using SOLA.Infrastructure.MemoryCache;
 using SOLA.Infrastructure.WebApi.Base;
 using SOLA.WebApi.Controllers;
 using SOLA.WebApi.Filters;
@@ -35,7 +34,6 @@ namespace SOLA.WebApi
                 .InstancePerRequest();
 
             // Modules
-            builder.RegisterModule<MemoryCacheModule>();
             builder.RegisterModule<CacheModule>();
             builder.RegisterModule<BusinessModule>();
 

@@ -11,9 +11,9 @@ namespace SOLA.DataAccess
     {
         private const string ConnectionStringTmpl = "Data Source={0};Initial Catalog={1};User Id={2};Password={3}";
 
-        public CustomerConfig(ICacheHelper cacheHelper)
+        public CustomerConfig(IRequestScopeCache requestScopeCache)
         {
-            var dataSource = cacheHelper.RequestScope.CustomerDataSource;
+            var dataSource = requestScopeCache.CustomerDataSource;
 
             ConnectionString = string.Format(ConnectionStringTmpl, dataSource.ServerName, dataSource.SiteName,
                 dataSource.UserName, dataSource.Password);
