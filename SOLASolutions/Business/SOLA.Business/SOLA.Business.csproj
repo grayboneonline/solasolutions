@@ -41,6 +41,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\AutoMapper.4.0.4\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +51,7 @@
     <Compile Include="BusinessModule.cs" />
     <Compile Include="PageManagement.cs" />
     <Compile Include="PermissionManagement.cs" />
+    <Compile Include="ProductManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleDA.cs" />
     <Compile Include="UserDA.cs" />

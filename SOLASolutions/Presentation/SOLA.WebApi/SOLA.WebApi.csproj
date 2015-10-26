@@ -201,6 +201,7 @@
     <Compile Include="App_Start\Startup.OAuth.cs" />
     <Compile Include="App_Start\Startup.Api.cs" />
     <Compile Include="App_Start\Startup.Mvc.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="WebApiMapper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SampleController.cs" />

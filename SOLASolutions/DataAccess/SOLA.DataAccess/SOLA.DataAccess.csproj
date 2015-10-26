@@ -53,6 +53,7 @@
     <Compile Include="CustomerConfig.cs" />
     <Compile Include="PermissionDA.cs" />
     <Compile Include="PageDA.cs" />
+    <Compile Include="ProductDA.cs" />
     <Compile Include="RoleDA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDA.cs" />
