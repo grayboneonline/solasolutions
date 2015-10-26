@@ -49,6 +49,7 @@
     <Compile Include="Contracts\IRefreshToken.cs" />
     <Compile Include="Contracts\ICustomerDataSource.cs" />
     <Compile Include="Contracts\IApplicationClient.cs" />
+    <Compile Include="Contracts\IUserSession.cs" />
     <Compile Include="LifeTimeScopeCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestScopeCache.cs" />
