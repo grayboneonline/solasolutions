@@ -248,6 +248,10 @@
       <Project>{bb40d3ff-6384-4bf8-b314-5d189ddc3434}</Project>
       <Name>SOLA.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\SOLA.Cache\SOLA.Cache.csproj">
+      <Project>{8f52ac9a-88e6-4d4e-bf68-2f73070baaf7}</Project>
+      <Name>SOLA.Cache</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\SOLA.Common\SOLA.Common.csproj">
       <Project>{a596de9e-23e1-4dfa-97ae-9592e2e1a89c}</Project>
       <Name>SOLA.Common</Name>

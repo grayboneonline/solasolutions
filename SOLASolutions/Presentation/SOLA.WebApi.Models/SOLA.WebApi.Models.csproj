@@ -38,6 +38,12 @@
     <Compile Include="OAuth\RefreshToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\SOLA.Cache\SOLA.Cache.csproj">
+      <Project>{8f52ac9a-88e6-4d4e-bf68-2f73070baaf7}</Project>
+      <Name>SOLA.Cache</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
