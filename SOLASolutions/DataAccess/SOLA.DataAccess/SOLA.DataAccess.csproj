@@ -58,10 +58,6 @@
     <Compile Include="UserDA.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\SOLA.Cache\SOLA.Cache.csproj">
-      <Project>{8f52ac9a-88e6-4d4e-bf68-2f73070baaf7}</Project>
-      <Name>SOLA.Cache</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Common\SOLA.Common\SOLA.Common.csproj">
       <Project>{A596DE9E-23E1-4DFA-97AE-9592E2E1A89C}</Project>
       <Name>SOLA.Common</Name>

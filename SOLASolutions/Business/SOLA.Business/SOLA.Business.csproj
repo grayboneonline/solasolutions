@@ -55,10 +55,6 @@
     <Compile Include="UserDA.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\SOLA.Cache\SOLA.Cache.csproj">
-      <Project>{8f52ac9a-88e6-4d4e-bf68-2f73070baaf7}</Project>
-      <Name>SOLA.Cache</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\DataAccess\SOLA.DataAccess.Models\SOLA.DataAccess.Models.csproj">
       <Project>{1f65c7d0-777b-4607-9d8d-6422cf48896b}</Project>
       <Name>SOLA.DataAccess.Models</Name>
