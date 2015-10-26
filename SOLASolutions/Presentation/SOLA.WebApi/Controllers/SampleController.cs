@@ -13,10 +13,10 @@ namespace SOLA.WebApi.Controllers
             this.lifeTimeScopeCache = lifeTimeScopeCache;
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public IHttpActionResult Get()
         {
-            return Ok(lifeTimeScopeCache.CustomerDataSources.Values);
+            return Ok(lifeTimeScopeCache.UserSessions.Values);
         }
     }
 }

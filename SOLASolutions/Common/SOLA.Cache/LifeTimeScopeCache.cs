@@ -8,7 +8,7 @@ namespace SOLA.Cache
         void Initialize();
         CustomerDataSourceCache CustomerDataSources { get; set; }
         ApplicationClientCache ApplicationClients { get; set; }
-        RefreshTokenCache RefreshTokens { get; set; }
+        UserSessionCache UserSessions { get; set; }
     }
 
     public class LifeTimeScopeCache : MemoryCache, ILifeTimeScopeCache
@@ -17,7 +17,7 @@ namespace SOLA.Cache
         {
             CustomerDataSources = new CustomerDataSourceCache();
             ApplicationClients = new ApplicationClientCache();
-            RefreshTokens = new RefreshTokenCache();
+            UserSessions = new UserSessionCache();
         }
 
         public CustomerDataSourceCache CustomerDataSources
@@ -32,10 +32,10 @@ namespace SOLA.Cache
             set { Set<ApplicationClientCache>(value); }
         }
 
-        public RefreshTokenCache RefreshTokens
+        public UserSessionCache UserSessions
         {
-            get { return Get<RefreshTokenCache>(); }
-            set { Set<RefreshTokenCache>(value); }
+            get { return Get<UserSessionCache>(); }
+            set { Set<UserSessionCache>(value); }
         }
     }
 }

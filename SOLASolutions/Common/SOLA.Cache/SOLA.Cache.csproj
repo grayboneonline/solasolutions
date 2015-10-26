@@ -45,7 +45,7 @@
     <Compile Include="CacheModule.cs" />
     <Compile Include="CacheObjects\ApplicationClientCache.cs" />
     <Compile Include="CacheObjects\CustomerDataSourceCache.cs" />
-    <Compile Include="CacheObjects\RefreshTokenCache.cs" />
+    <Compile Include="CacheObjects\UserSessionCache.cs" />
     <Compile Include="Contracts\IRefreshToken.cs" />
     <Compile Include="Contracts\ICustomerDataSource.cs" />
     <Compile Include="Contracts\IApplicationClient.cs" />

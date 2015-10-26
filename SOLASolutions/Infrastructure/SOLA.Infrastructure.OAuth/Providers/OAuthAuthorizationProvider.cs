@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security;
@@ -12,7 +13,7 @@ namespace SOLA.Infrastructure.OAuth.Providers
     {
         public Func<string, ClientInfo> GetClientFunc { get; set; }
 
-        public Func<string, string, bool> ValidateUserNameAndPassword { get; set; }
+        public Func<string, string, UserInfo> GetUserByUserNameAndPasswordFunc { get; set; }
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
@@ -59,17 +60,19 @@ namespace SOLA.Infrastructure.OAuth.Providers
             var allowedOrigin = context.OwinContext.Get<string>(OAuthDefaults.OwinKeyAllowedOrigin) ?? "*";
             context.OwinContext.Response.Headers.Add(OAuthDefaults.HeaderKeyAllowedOrigin, new[] { allowedOrigin });
 
-            if (ValidateUserNameAndPassword != null && !ValidateUserNameAndPassword(context.UserName, context.Password))
+            var user = GetUserByUserNameAndPasswordFunc(context.UserName, context.Password);
+            if (user == null)
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect");
                 return Task.FromResult<object>(null);
             }
-
             var identity = new ClaimsIdentity(OAuthDefaults.TokenFormat);
 
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
             identity.AddClaim(new Claim(OAuthDefaults.ClaimKeySub, context.UserName));
-            identity.AddClaim(new Claim(OAuthDefaults.ClaimKeySite, context.Request.Uri.Host.Split('.')[0]));
+            identity.AddClaim(new Claim(OAuthDefaults.ClaimKeySite, GetCustomerSite(context.Request.Uri.Host)));
+            identity.AddClaim(new Claim(OAuthDefaults.ClaimKeyUserId, user.Id.ToString()));
+            identity.AddClaim(new Claim(OAuthDefaults.ClaimKeySessionId, Guid.NewGuid().ToString()));
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
                 {
@@ -78,7 +81,7 @@ namespace SOLA.Infrastructure.OAuth.Providers
                     },
                     { 
                         OAuthDefaults.HeaderKeyUserName, context.UserName
-                    }
+                    },
                 });
             
             var ticket = new AuthenticationTicket(identity, props);
@@ -97,15 +100,22 @@ namespace SOLA.Infrastructure.OAuth.Providers
                 return Task.FromResult<object>(null);
             }
 
-            //TODO investigate this place
+            var originalSite = context.Ticket.Identity.Claims.FirstOrDefault(x => x.Type == OAuthDefaults.ClaimKeySite);
+            var currentSite = GetCustomerSite(context.Request.Uri.Host);
+            if (originalSite == null || originalSite.Value != currentSite)
+            {
+                context.SetError("invalid_site", "Refresh token is issued to a different site.");
+                return Task.FromResult<object>(null);
+            }
+
             // Change auth ticket for refresh token requests
             var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
-            //var newClaim = newIdentity.Claims.FirstOrDefault(c => c.Type == "newClaim");
-            //if (newClaim != null)
-            //{
-            //    newIdentity.RemoveClaim(newClaim);
-            //}
-            //newIdentity.AddClaim(new Claim("newClaim", "newValue"));
+            var newClaim = newIdentity.Claims.FirstOrDefault(c => c.Type == OAuthDefaults.ClaimKeySessionId);
+            if (newClaim != null)
+            {
+                newIdentity.RemoveClaim(newClaim);
+            }
+            newIdentity.AddClaim(new Claim(OAuthDefaults.ClaimKeySessionId, Guid.NewGuid().ToString()));
 
             var newTicket = new AuthenticationTicket(newIdentity, context.Ticket.Properties);
             context.Validated(newTicket);
@@ -122,6 +132,11 @@ namespace SOLA.Infrastructure.OAuth.Providers
             }
 
             return Task.FromResult<object>(null);
+        }
+
+        private string GetCustomerSite(string url)
+        {
+            return url.Split('.')[0];
         }
     }
 }

@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\RefreshToken.cs" />
+    <Compile Include="Contracts\UserInfo.cs" />
     <Compile Include="Formats\JwtTokenFormat.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Contracts\ClientInfo.cs" />

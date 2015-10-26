@@ -34,21 +34,38 @@ namespace SOLA.WebApi
             };
         };
 
-        private readonly Func<string, string, bool> validateUserNameAndPasswordFunc = (username, password) => username == password;
+        private readonly Func<string, string, UserInfo> getUserByUserNameAndPasswordFunc = (username, password) => username == password ? new UserInfo { Id = 1 } : null;
 
-        private readonly Func<RefreshToken, bool> addRefreshTokenFunc = refreshToken =>
+        private readonly Action<Guid, string, int, RefreshToken> addUserSessionFunc = (sessionId, userAgent, userId, refreshToken) =>
         {
-            Container.Resolve<ILifeTimeScopeCache>().RefreshTokens.Add(refreshToken.MapTo<Models.OAuth.RefreshToken>());
-            return true;
+            var userSession = new Models.OAuth.UserSession
+                                  {
+                                      Id = sessionId,
+                                      UserAgent = userAgent,
+                                      UserId = userId,
+                                      UserName = refreshToken.Subject,
+                                      RefreshToken = refreshToken.MapTo<Models.OAuth.RefreshToken>()
+                                  };
+
+            Container.Resolve<ILifeTimeScopeCache>().UserSessions.Add(userSession);
         };
 
         private readonly Func<string, string> getRefreshTokenProtectedTicketFunc = hashedToken =>
         {
             var lifeTimeScopeCache = Container.Resolve<ILifeTimeScopeCache>();
-            return lifeTimeScopeCache.RefreshTokens.ContainsKey(hashedToken) ? lifeTimeScopeCache.RefreshTokens[hashedToken].ProtectedTicket : null;
+            var userSession = lifeTimeScopeCache.UserSessions.FindByHashedToken(hashedToken);
+            return userSession == null ? null : userSession.RefreshToken.ProtectedTicket;
         };
 
-        private readonly Action<string> removeRefreshTokenAction = hashedToken => Container.Resolve<ILifeTimeScopeCache>().RefreshTokens.Remove(hashedToken);
+        private readonly Action<string> removeRefreshTokenAction = hashedToken => Container.Resolve<ILifeTimeScopeCache>().UserSessions.RemoveByHashedToken(hashedToken);
+
+        private readonly Func<string, bool> validateSessionId = sessionid =>
+        {
+            Guid id;
+            if (!Guid.TryParse(sessionid, out id))
+                return false;
+            return Container.Resolve<ILifeTimeScopeCache>().UserSessions.ContainsKey(id);
+        };
 
         #endregion
 
@@ -67,11 +84,11 @@ namespace SOLA.WebApi
                     Provider = new OAuthAuthorizationProvider
                     {
                         GetClientFunc = getClientFunc,
-                        ValidateUserNameAndPassword = validateUserNameAndPasswordFunc
+                        GetUserByUserNameAndPasswordFunc = getUserByUserNameAndPasswordFunc
                     },
                     RefreshTokenProvider = new RefreshTokenProvider
                     {
-                        AddRefreshTokenFunc = addRefreshTokenFunc,
+                        AddUserSessionFunc = addUserSessionFunc,
                         GetRefreshTokenProtectedTicketFunc = getRefreshTokenProtectedTicketFunc,
                         RemoveRefreshTokenFunc = removeRefreshTokenAction
                     }
@@ -81,7 +98,10 @@ namespace SOLA.WebApi
                 {
                     AuthenticationMode = AuthenticationMode.Active,
                     AllowedAudiences = allowClients,
-                    Provider = new OAuthAuthenticationProvider(),
+                    Provider = new OAuthAuthenticationProvider
+                                   {
+                                       ValidateSessionId = validateSessionId
+                                   },
                     IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
                     {
                         new SymmetricKeyIssuerSecurityTokenProvider(WebConfig.Issuer, TextEncodings.Base64Url.Decode(WebConfig.Base64SymetricKey))
