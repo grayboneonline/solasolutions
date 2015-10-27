@@ -7,7 +7,6 @@ namespace SOLA.WebApi
         public static void Register()
         {
             MapTwoWay<Models.OAuth.RefreshToken, Infrastructure.OAuth.Contracts.RefreshToken>();
-            MapTwoWay<Models.ProductModel, Business.Models.Product>();
         }
 
         private static void MapTwoWay<TSource, TDestination>()

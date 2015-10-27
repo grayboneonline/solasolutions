@@ -13,8 +13,6 @@ namespace SOLA.Business
             MapTwoWay<Models.Permission, DataAccess.Models.Permission>();
             MapTwoWay<Models.Role, DataAccess.Models.Role>();
             MapTwoWay<Models.User, DataAccess.Models.User>();
-
-            MapTwoWay<Models.Product, DataAccess.Models.Product>();
         }
 
         private static void MapTwoWay<TSource, TDestination>()
