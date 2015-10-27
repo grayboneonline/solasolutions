@@ -91,8 +91,6 @@ CREATE TABLE [dbo].[Users](
 
 GO
 
-USE [TESTDB]
-GO
 
 SET ANSI_NULLS ON
 GO
