@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Admin\ApplicationClient.cs" />
     <Compile Include="Admin\CustomerDataSource.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,6 +10,12 @@ namespace SOLA.Business
         {
             builder.RegisterType<AdminManagement>().As<IAdminManagement>().InstancePerRequest();
 
+            builder.RegisterType<LocationManagement>().As<ILocationManagement>().InstancePerRequest();
+            builder.RegisterType<PageManagement>().As<IPageManagement>().InstancePerRequest();
+            builder.RegisterType<PermissionManagement>().As<IPermissionManagement>().InstancePerRequest();
+            builder.RegisterType<RoleManagement>().As<IRoleManagement>().InstancePerRequest();
+            builder.RegisterType<UserManagement>().As<IUserManagement>().InstancePerRequest();
+
             builder.RegisterModule<DataAccessModule>();
         }
     }

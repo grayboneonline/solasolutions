@@ -9,6 +9,7 @@ namespace SOLA.Business
             MapTwoWay<Models.Admin.CustomerDataSource, DataAccess.Models.Admin.CustomerDataSource>();
             MapTwoWay<Models.Admin.ApplicationClient, DataAccess.Models.Admin.ApplicationClient>();
 
+            MapTwoWay<Models.Location, DataAccess.Models.Location>();
             MapTwoWay<Models.Page, DataAccess.Models.Page>();
             MapTwoWay<Models.Permission, DataAccess.Models.Permission>();
             MapTwoWay<Models.Role, DataAccess.Models.Role>();

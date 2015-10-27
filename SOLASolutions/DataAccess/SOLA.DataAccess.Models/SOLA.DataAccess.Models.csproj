@@ -38,6 +38,7 @@
     <Compile Include="Admin\ApplicationClient.cs" />
     <Compile Include="Admin\AzureSqlServer.cs" />
     <Compile Include="Admin\Customer.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,6 +7,7 @@ namespace SOLA.WebApi.Models.OAuth
     {
         public Guid Id { get; set; }
         public string UserAgent { get; set; }
+        public string CustomerSite { get; set; }
         public int UserId { get; set; }
         public string UserName { get; set; }
         public IRefreshToken RefreshToken { get; set; }

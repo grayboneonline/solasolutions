@@ -8,7 +8,7 @@ namespace SOLA.Infrastructure.OAuth.Providers
 {
     public class RefreshTokenProvider : IAuthenticationTokenProvider
     {
-        public Action<Guid, string, int, RefreshToken> AddUserSessionFunc { get; set; }
+        public Action<Guid, string, int, string, RefreshToken> AddUserSessionFunc { get; set; }
         public Func<string, string> GetRefreshTokenProtectedTicketFunc { get; set; }
         public Action<string> RemoveRefreshTokenFunc { get; set; }
  
@@ -18,8 +18,10 @@ namespace SOLA.Infrastructure.OAuth.Providers
 
             var sessionidClaim = context.Ticket.Identity.Claims.FirstOrDefault(x => x.Type == OAuthDefaults.ClaimKeySessionId);
             var useridClaim = context.Ticket.Identity.Claims.FirstOrDefault(x => x.Type == OAuthDefaults.ClaimKeyUserId);
+            var siteClaim = context.Ticket.Identity.Claims.FirstOrDefault(x => x.Type == OAuthDefaults.ClaimKeySite);
 
-            if (!string.IsNullOrEmpty(clientid) && sessionidClaim != null && useridClaim != null && AddUserSessionFunc != null)
+            if (!string.IsNullOrEmpty(clientid) && sessionidClaim != null && 
+                useridClaim != null && siteClaim != null && AddUserSessionFunc != null)
             {
                 var refreshTokenId = Guid.NewGuid().ToString("n");
                 var refreshTokenLifeTime = context.OwinContext.Get<int>(OAuthDefaults.OwinKeyRefreshTokenLifeTime);
@@ -39,7 +41,7 @@ namespace SOLA.Infrastructure.OAuth.Providers
                     ProtectedTicket = context.SerializeTicket(),
                 };
 
-                AddUserSessionFunc(Guid.Parse(sessionidClaim.Value), context.Request.Headers["User-Agent"], int.Parse(useridClaim.Value), refreshToken);
+                AddUserSessionFunc(Guid.Parse(sessionidClaim.Value), context.Request.Headers["User-Agent"], int.Parse(useridClaim.Value), siteClaim.Value, refreshToken);
                 context.SetToken(refreshTokenId);
             }
         }

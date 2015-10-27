@@ -49,6 +49,7 @@
     <Compile Include="Base\AdminDatabase.cs" />
     <Compile Include="Base\CustomerDatabase.cs" />
     <Compile Include="Base\IConfig.cs" />
+    <Compile Include="LocationDA.cs" />
     <Compile Include="DataAccessModule.cs" />
     <Compile Include="CustomerConfig.cs" />
     <Compile Include="PermissionDA.cs" />

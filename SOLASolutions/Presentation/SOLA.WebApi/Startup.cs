@@ -31,7 +31,7 @@ namespace SOLA.WebApi
 
         public void SetMemoryCache()
         {
-            Container.RunInRequestScope(requestScope =>
+            using (var requestScope = Container.BeginLifetimeScope(Autofac.Core.Lifetime.MatchingScopeLifetimeTags.RequestLifetimeScopeTag))
             {
                 var lifeTimeScopeCache = requestScope.Resolve<ILifeTimeScopeCache>();
                 var adminManagement = requestScope.Resolve<IAdminManagement>();
@@ -39,7 +39,7 @@ namespace SOLA.WebApi
                 lifeTimeScopeCache.Initialize();
                 lifeTimeScopeCache.ApplicationClients.AddRange(adminManagement.GetAllApplicationClient());
                 lifeTimeScopeCache.CustomerDataSources.AddRange(adminManagement.GetAllAzureSqlDataSources());
-            });
+            }
         }
     }
 }

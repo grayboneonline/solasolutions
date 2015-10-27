@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Web;
 using Autofac;
+using SOLA.Business;
 using SOLA.Cache;
 using SOLA.Infrastructure.OAuth.Contracts;
 using SOLA.Infrastructure.OAuth.Formats;
@@ -34,18 +36,24 @@ namespace SOLA.WebApi
             };
         };
 
-        private readonly Func<string, string, UserInfo> getUserByUserNameAndPasswordFunc = (username, password) => username == password ? new UserInfo { Id = 1 } : null;
+        private readonly Func<string, string, UserInfo> getUserByUserNameAndPasswordFunc = (username, password) =>
+        {
+            var user = GetService<IUserManagement>().GetByUserNameAndPassword(username, password);
+            if (user == null) return null;
+            return new UserInfo { Id = user.UserId };
+        };
 
-        private readonly Action<Guid, string, int, RefreshToken> addUserSessionFunc = (sessionId, userAgent, userId, refreshToken) =>
+        private readonly Action<Guid, string, int, string, RefreshToken> addUserSessionFunc = (sessionId, userAgent, userId, customerSite, refreshToken) =>
         {
             var userSession = new Models.OAuth.UserSession
-                                  {
-                                      Id = sessionId,
-                                      UserAgent = userAgent,
-                                      UserId = userId,
-                                      UserName = refreshToken.Subject,
-                                      RefreshToken = refreshToken.MapTo<Models.OAuth.RefreshToken>()
-                                  };
+            {
+                Id = sessionId,
+                UserAgent = userAgent,
+                CustomerSite = customerSite,
+                UserId = userId,
+                UserName = refreshToken.Subject,
+                RefreshToken = refreshToken.MapTo<Models.OAuth.RefreshToken>()
+            };
 
             Container.Resolve<ILifeTimeScopeCache>().UserSessions.Add(userSession);
         };
@@ -107,6 +115,17 @@ namespace SOLA.WebApi
                         new SymmetricKeyIssuerSecurityTokenProvider(WebConfig.Issuer, TextEncodings.Base64Url.Decode(WebConfig.Base64SymetricKey))
                     }
                 });
+        }
+
+        private static T GetService<T>()
+        {
+            var owinContext = HttpContext.Current.Request.GetOwinContext();
+            if (owinContext.Environment.ContainsKey("autofac:OwinLifetimeScope"))
+            {
+                var requestScope = owinContext.Environment["autofac:OwinLifetimeScope"] as Autofac.Core.Lifetime.LifetimeScope;
+                return requestScope.Resolve<T>();
+            }
+            return default(T);
         }
     }
 }

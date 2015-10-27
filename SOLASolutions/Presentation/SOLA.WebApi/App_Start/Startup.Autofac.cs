@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
@@ -7,9 +6,7 @@ using Autofac.Integration.WebApi;
 using Owin;
 using SOLA.Business;
 using SOLA.Cache;
-using SOLA.Infrastructure.WebApi.Base;
-using SOLA.WebApi.Controllers;
-using SOLA.WebApi.Filters;
+using SOLA.WebApi.Middlewares;
 
 namespace SOLA.WebApi
 {
@@ -21,17 +18,8 @@ namespace SOLA.WebApi
         {
             var builder = new ContainerBuilder();
 
-            // Api filters
-            builder.RegisterWebApiFilterProvider(HttpConfig);
-            builder.RegisterType<HandleRequestFilter>()
-                .AsWebApiActionFilterFor<BaseApiController>()
-                .InstancePerRequest();
-
-            // Mvc filters
-            builder.RegisterFilterProvider();
-            builder.RegisterType<HandleRequestFilterAttribute>()
-                .AsActionFilterFor<HomeController>()
-                .InstancePerRequest();
+            // OWIN middlewares
+            builder.RegisterType<HandleRequestMiddleware>().InstancePerRequest();
 
             // Modules
             builder.RegisterModule<CacheModule>();
@@ -53,25 +41,7 @@ namespace SOLA.WebApi
 
             app.UseAutofacMiddleware(Container);
             app.UseAutofacWebApi(HttpConfig);
-        }
-    }
-
-    public static class ContainerExtensions
-    {
-        public static T RunInRequestScope<T>(this IContainer container, Func<ILifetimeScope, T> func)
-        {
-            using (var requestScope = container.BeginLifetimeScope(Autofac.Core.Lifetime.MatchingScopeLifetimeTags.RequestLifetimeScopeTag))
-            {
-                return func(requestScope);
-            }
-        }
-
-        public static void RunInRequestScope(this IContainer container, Action<ILifetimeScope> action)
-        {
-            using (var requestScope = container.BeginLifetimeScope(Autofac.Core.Lifetime.MatchingScopeLifetimeTags.RequestLifetimeScopeTag))
-            {
-                action(requestScope);
-            }
+            app.UseAutofacMvc();
         }
     }
 }
