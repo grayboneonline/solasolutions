@@ -167,7 +167,6 @@
     <Content Include="Global.asax" />
     <Content Include="resources\app\app.js" />
     <Content Include="resources\app\directives.js" />
-    <Content Include="resources\app\home\home.controller.js" />
     <Content Include="resources\app\home\home.html" />
     <Content Include="resources\app\login\login.controller.js" />
     <Content Include="resources\app\login\login.html" />
@@ -233,6 +232,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\ResetPassword.cshtml" />
     <Content Include="Views\Home\ForgotPassword.cshtml" />
+    <Content Include="resources\app\home\home.controller.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
