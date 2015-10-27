@@ -38,8 +38,8 @@
           .setNotify(true, true)
     } //configLocalStorage
 
-    configLeftMenu.$inject = ['$mdThemingProvider', '$stateProvider', '$urlRouterProvider', '$mdIconProvider'];
-    function configLeftMenu($mdThemingProvider, $stateProvider, $urlRouterProvider, $mdIconProvider) {
+    configLeftMenu.$inject = ['$mdThemingProvider', '$locationProvider', '$stateProvider', '$urlRouterProvider', '$mdIconProvider'];
+    function configLeftMenu($mdThemingProvider, $locationProvider, $stateProvider, $urlRouterProvider, $mdIconProvider) {
 
         $mdThemingProvider
 			.theme('default')
@@ -84,12 +84,31 @@
 
 			        }]
 			    }
-			});
+			})
+            .state('app.home', {
+                url: "/home",
+                views: {
+                    'content': {
+                        templateUrl: getResourceContentPath("/app/home/home.html")
+                    }
+                },
+                resolve: {
+                    loadMyService: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load(
+                            {
+                                name: 'controller',
+                                files: ['resources/app/home/home.controller.js']
+                            }
+                        );
+
+                    }]
+                }
+            });
 
         // For any unmatched url, send to /index
         $urlRouterProvider.otherwise(function ($injector, $location) {
             var $state = $injector.get("$state");
-            $state.go("login");
+            $state.go("app.home");
         });
     }
 

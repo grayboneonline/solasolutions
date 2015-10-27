@@ -164,6 +164,8 @@
     <Content Include="Global.asax" />
     <Content Include="resources\app\app.js" />
     <Content Include="resources\app\directives.js" />
+    <Content Include="resources\app\home\home.controller.js" />
+    <Content Include="resources\app\home\home.html" />
     <Content Include="resources\app\login\login.controller.js" />
     <Content Include="resources\app\login\login.html" />
     <Content Include="resources\app\services\login.service.js" />

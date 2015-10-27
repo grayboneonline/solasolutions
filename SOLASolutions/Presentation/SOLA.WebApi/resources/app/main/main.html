@@ -1,1 +1,81 @@
-﻿
+﻿<div ng-controller="MainController as self" layout="column" style="height: 100%;">
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" layout="column">
+        <md-toolbar layout="column" class="md-primary flex-shrink-0" style="min-height: 150px; max-height: 250px; position: relative">
+            <img ng-src="{{self.imageLogo}}" alt="logo" style="width: 100%; max-height: 250px;" />
+            <div class="md-padding" layout="column" style="position: absolute; bottom: 0px; background: linear-gradient(to top, rgba(0,0,0,0.40), transparent); width: 100%">
+                <img ng-src="{{self.imageProfile}}" class="avatar-icon" alt="avater" style="margin-bottom: 8px" />
+                <span class="md-body-2">{{self.currentUser.firstName + ' ' + self.currentUser.lastName}}</span>
+                <span class="md-body-2">{{self.currentUser.email}}</span>
+            </div>
+        </md-toolbar>
+        <md-content flex style="min-height: 64px;">
+            <md-list class="menu-navigation">
+                <md-list-item ng-repeat="item in self.pageList" layout="column" layout-align="center center">
+                    <md-button aria-label="Icon" ng-click="self.openPage(item.stateName)" flex ng-if="!item.pageChild">
+                        <div layout="row">
+                            <md-icon class="material-icons" aria-label="{{item.iconUrl}}">{{item.iconUrl}}</md-icon>
+                            <span style="padding-left: 5px;" flex>{{item.pageName}}</span>
+                        </div>
+                    </md-button>
+
+                    <md-button aria-label="Icon" ng-click="item.toggled = !item.toggled" flex ng-if="item.pageChild.length > 0">
+                        <div layout="row">
+                            <md-icon class="material-icons" aria-label="{{item.iconUrl}}">{{item.iconUrl}}</md-icon>
+                            <span style="padding-left: 5px;" flex>{{item.pageName}}</span>
+                            <span ng-class="{'toggled': !item.toggled, 'md-toggle-icon': item.toggled}">
+                                <md-icon class="material-icons" aria-label="keyboard_arrow_down">keyboard_arrow_down</md-icon>
+                            </span>
+                        </div>
+                    </md-button>
+
+                    <div ng-if="item.pageChild.length > 0" collapse="!item.toggled" class="sub-menu">
+                        <md-button aria-label="Icon" flex ng-repeat="page in item.pageChild" ng-click="self.openPage(page.stateName)">
+                            <md-icon class="material-icons" aria-label="{{page.iconUrl}}">{{page.iconUrl}}</md-icon>
+                            {{page.pageName}}
+                        </md-button>
+                        <span></span>
+                    </div>
+                </md-list-item>
+                <md-list-item layout="column" layout-align="center center" show-sm hide>
+                    <md-button aria-label="Icon" ng-click="self.logout()" flex>
+                        <div layout="row">
+                            <md-icon class="material-icons" aria-label="exit_to_app">exit_to_app</md-icon>
+                            <span style="padding-left: 5px;" flex>Logout</span>
+                        </div>
+                    </md-button>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-sidenav>
+
+    <!-- Top Menu -->
+    <md-toolbar layout="row" class="md-primary top-menu-header min-height-0" collapse="!self.topMenu">
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="menu" ng-click="self.toggleLeft()" ng-if="!self.iconBack">
+                <md-icon class="material-icons" aria-label="menu">menu</md-icon>
+            </md-button>
+
+            <md-button class="md-icon-button" aria-label="Back" ng-click="self.back()" ng-if="self.iconBack">
+                <md-icon class="material-icons" aria-label="arrow_back">arrow_back</md-icon>
+            </md-button>
+
+            <h1 flex>{{self.siteName}}</h1>
+
+            <img hide-sm ng-src="{{self.imageProfile}}" class="avatar-icon" alt="avater" style="margin-right: 8px" />
+            <span ng-click="self.gotoAccountSetting()" style="cursor: pointer; outline: 0" class="md-body-2" hide-sm>{{self.currentUser.email}}</span>
+
+
+            <md-button hide-sm class="md-icon-button" aria-label="Exit" ng-click="self.logout()">
+                <md-icon class="material-icons" aria-label="exit_to_app">exit_to_app</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <div style="position: absolute; width: 100%; z-index: 59">
+        <md-progress-linear class="md-accent" us-spinner md-mode="indeterminate"></md-progress-linear>
+    </div>
+    
+    <!-- content -->
+    <md-content ui-view="content" flex style="min-height: 64px; height: 100%; overflow: hidden;" layout="column"></md-content>
+
+</div>

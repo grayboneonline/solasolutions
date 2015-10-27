@@ -1,5 +1,9 @@
-﻿function getUrlApi(path) {
-    return (SOLA.originalUrl + SOLA.urlApi + path);
+﻿function getUrl(path) {
+    return (SOLA.siteUrl + path);
+}
+
+function getUrlApi(path) {
+    return (SOLA.siteUrl + SOLA.urlApi + path);
 }
 
 function getResourceContentPath(path) {
